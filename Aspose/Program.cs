@@ -1,8 +1,12 @@
-﻿using Aspose.Pdf;
+﻿using Aspose.Imaging.Xmp.Types.Complex.Dimensions;
+using Aspose.Pdf;
 using Aspose.Pdf.Drawing;
 using Aspose.Pdf.Text;
 using Azure;
 using Microsoft.Data.SqlClient;
+using System;
+using System.Data;
+using System.Drawing.Printing;
 
 internal class Program
 {
@@ -18,506 +22,531 @@ internal class Program
         page.PageInfo.Margin.Top = 10;
         page.PageInfo.Margin.Bottom = 10;
 
-        MainPage(page);
-        SecondPage(page);
+        Page1(page);
+
+        Page2(page);
 
 
-        TextFragment header = new TextFragment("SAMPLE - NOT TO BE SHARED WITHOUT WRITTEN CONSENT OF LIMENEAL SOLUTIONS - FZCO")
-        {
-            HorizontalAlignment = HorizontalAlignment.Center,
-            Margin = { Top = 20 },
-            TextState =
-            {
-                Font = FontRepository.FindFont("Arial-Bold"),
-                FontSize = 12
-            }
-        };
-        page.Paragraphs.Add(header);
-
-        Table table = new Table
-        {
-            ColumnWidths = "100 100 100 250",
-            Margin = new MarginInfo(10, 10, 10, 10), 
-            DefaultCellBorder = new BorderInfo(BorderSide.None), 
-            RepeatingRowsCount = 2, 
-            IsBroken = true 
-        };
-
-        page.Paragraphs.Add(table);
-
-        string[] headerTexts = { "Virtues", "Emphasis", "Focus", "Role requirement Vs Individuals' expression" };
-
-        Row headerRow = table.Rows.Add();
-        foreach (string headerText in headerTexts)
-        {
-            headerRow.Cells.Add(headerText);
-        }
-
-        foreach (Cell cell in headerRow.Cells)
-        {
-            cell.BackgroundColor = Color.LightBlue;
-            cell.DefaultCellTextState = new TextState
-            {
-                ForegroundColor = Color.Blue,
-                FontSize = 12
-            };
-        }
-
-        Row percentageRow = table.Rows.Add();
-        percentageRow.DefaultCellPadding = new MarginInfo(0, 0, 0, 10);
-        percentageRow.Cells.Add("");
-        percentageRow.Cells.Add("");
-        percentageRow.Cells.Add("");
-        Cell progressBarCell = percentageRow.Cells.Add();
-
-        Table table1 = new Table
-        {
-            ColumnWidths = "150 100",
-            DefaultCellBorder = new BorderInfo(BorderSide.None), 
-            RepeatingRowsCount = 1, 
-            IsBroken = true 
-        };
-
-        Row row1 = table1.Rows.Add();
-        Row row2 = table1.Rows.Add();
-        Cell textColumn = row2.Cells.Add();
-        TextFragment textFragment = new TextFragment("0%  20%  40%  60%  80%  100%");
-        textFragment.TextState.FontSize = 10;
-        textColumn.Paragraphs.Add(textFragment);
-
-        progressBarCell.Paragraphs.Add(table1);
-
-        using (SqlConnection connection = new SqlConnection(connectionString))
-        {
-            connection.Open();
-            string query = "SELECT * FROM TalentTable"; 
-
-            using (SqlCommand command = new SqlCommand(query, connection))
-            using (SqlDataReader reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    string virtue = reader["Virtue"].ToString()!;
-                    string emphasis = reader["Emphasis"].ToString()!;
-                    string focus = reader["Focus"].ToString()!;
-                    int requirement = Convert.ToInt32(reader["Requirement"]);
-                    int expression = Convert.ToInt32(reader["Expression"]);
-                    AddRowWithProgressBar(table, virtue!, emphasis!, focus!, requirement, expression);
-                }
-            }
-        }
-
-
-        TextFragment header1 = new TextFragment("SAMPLE - NOT TO BE SHARED WITHOUT WRITTEN CONSENT OF LIMENEAL SOLUTIONS - FZCO")
-        {
-            HorizontalAlignment = HorizontalAlignment.Center,
-            Margin = { Top = 20 },
-        };
-        header1.TextState.Font = FontRepository.FindFont("Arial-Bold");
-        header1.TextState.FontSize = 12;
-        page.Paragraphs.Add(header1);
-
-        page.Paragraphs.Add(new TextFragment("\n"));
-
-        AddTextByPostion(page, "Effectiveness Score", 120, 620, 12);
-        AddTextByPostion(page, "Fulfilment Score", 390, 620, 12);
-
-        DrawCircularProgressBarWithText(98, 50, 180, page);
-        DrawCircularProgressBarWithText(98, 330, 180, page);
-
-        AddTextByPostion(page, "98%", 150, 545, 12);
-        AddTextByPostion(page, "95%", 430, 545, 12);
-
-        page.Paragraphs.Add(new TextFragment("\n\n\n\n\n"));
-
-        Table mainTable = new Table
-        {
-            ColumnWidths = "200 100 200", 
-            DefaultCellBorder = new BorderInfo(BorderSide.None), 
-            Margin = new MarginInfo(50, 0, 0, 0) 
-        };
-
-        page.Paragraphs.Add(mainTable);
-
-        Row row = mainTable.Rows.Add();
-
-        AddCardContent(row, "YOU WOULD BE MOST EFFECTIVE", "This means, the degree of expression of almost all the virtues required to successfully deliver in this role align with the degree expressed by you.", 5);
-
-        Cell spacerCell = row.Cells.Add(""); 
-        spacerCell.Border = new BorderInfo(BorderSide.None); 
-
-
-        AddCardContent(row, "YOU ARE HIGHLY FULFILLED", "In this state, there is fluidity between your body and mind, where you are totally absorbed in the tasks involved, beyond the point of distraction with increased commitment, motivation, concentration and performance.", 5);
 
         pdfDocument.Save(@"D:\Aspose_PdfAspose_PDF.pdf");
     }
 
-    static void AddTextByPostion(Page page, string text, int x, int y, int fontSize)
+    static void Page1(Page page)
     {
-        TextFragment text1 = new TextFragment(text)
+        PageHeaderContent(page);
+
+        Table TableOfContext1 = new Table
         {
-            Position = new Position(x, y), 
+            ColumnWidths = "520",
+            Margin = new MarginInfo(15, 1, 10, 2),
+            DefaultCellBorder = new BorderInfo(BorderSide.None),
         };
 
-        text1.TextState.FontSize = fontSize;
-        text1.TextState.Font = FontRepository.FindFont("Arial");
-        text1.TextState.ForegroundColor = Color.Blue;
+        // Add the table to the page
+        page.Paragraphs.Add(TableOfContext1);
 
-        page.Paragraphs.Add(text1);
-    }
+        // Define the header text with different styles
+        string textPart1 = "The Limeneal Wheel® ";
+        string textPart2 = "Model provides insight into individual's Power, Push and Pain dimensions\n\n";
+        string textPart3 = "assessment tool, identifies individual's Power, Push and Pain dimensions through which an individual interacts with others, makes decisions or takes actions.";
 
-    static void AddRowWithProgressBar(Table table, string virtues, string emphasis, string focus, int requirement, int expression)
-    {
-        Row row = table.Rows.Add();
+        // Create a new row for the header
+        Row TableOfContexHeaderRow1 = TableOfContext1.Rows.Add();
 
-        row.DefaultCellPadding = new MarginInfo(0, 0, 0, 10);
+        // Create a new cell
+        Cell headerCell = TableOfContexHeaderRow1.Cells.Add();
 
-        RowText(row, virtues);
-        RowText(row, emphasis);
-        RowText(row, focus);
+        // Create a TextFragment to hold the styled text
+        TextFragment styledText = new TextFragment();
 
-        Cell progressBarCell = row.Cells.Add();
-
-        Table nestedTable = new Table
+        // Add the first part of the text with specific style
+        TextSegment segment1 = new TextSegment(textPart1)
         {
-            ColumnWidths = "150 100",
-            DefaultCellBorder = new BorderInfo(BorderSide.None) 
-        };
-
-        Row progressBarRow = nestedTable.Rows.Add();
-
-        Graph graph = new Graph(200.0, 30.0);
-
-        Aspose.Pdf.Drawing.Rectangle requirementBar = new Aspose.Pdf.Drawing.Rectangle(0, 0, (float)(requirement * 1.25), 10)
-        {
-            GraphInfo = new GraphInfo
+            
+            TextState = new TextState
             {
-                Color = Color.Blue,
-                FillColor = Color.Blue
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 10,
+                FontStyle = FontStyles.Bold,
+                Font = FontRepository.FindFont("Arial"),
             }
         };
-        graph.Shapes.Add(requirementBar);
+        styledText.Segments.Add(segment1);
 
-        Aspose.Pdf.Drawing.Rectangle expressionBar = new Aspose.Pdf.Drawing.Rectangle(0, 15, (float)(expression * 1.25), 10)
-        {
-            GraphInfo = new GraphInfo
-            {
-                Color = Color.Orange,
-                FillColor = Color.Orange
-            }
-        };
-        graph.Shapes.Add(expressionBar);
-
-        Cell progressBarColumn = progressBarRow.Cells.Add();
-        progressBarColumn.Paragraphs.Add(graph);
-
-        Cell textColumn = progressBarRow.Cells.Add();
-        TextFragment textFragment = new TextFragment($"{expression}% Expression\n{requirement}% Requirement");
-        textFragment.TextState.FontSize = 11;
-        textFragment.TextState.ForegroundColor = Color.Blue;
-        textFragment.TextState.LineSpacing = 5;
-        textColumn.Paragraphs.Add(textFragment);
-
-        progressBarCell.Paragraphs.Add(nestedTable);
-    }
-
-    static void RowText(Row row, string text)
-    {
-        Cell textColumn0 = row.Cells.Add();
-        TextFragment textFragment0 = new TextFragment(text);
-        textFragment0.TextState.FontSize = 11;
-        textFragment0.TextState.ForegroundColor = Color.Blue;
-        textColumn0.Paragraphs.Add(textFragment0);
-    }
-
-    static void DrawCircularProgressBarWithText(int percentage, float x, float y, Page page)
-    {
-        Graph graph = new Graph(200.0, 200.0);
-        graph.Left = x;  
-        graph.Top = y;   
-
-        Circle outerCircle = new Circle(100, 100, 45); 
-        outerCircle.GraphInfo = new GraphInfo
-        {
-            LineWidth = 6, 
-            Color = Color.FromRgb(1.0f, 0.3f, 0.0f) 
-        };
-
-        graph.Shapes.Add(outerCircle);
-
-        Circle innerCircle = new Circle(100, 100, 30); 
-        innerCircle.GraphInfo = new GraphInfo
-        {
-            LineWidth = 2,
-            Color = Color.LightGray, 
-            FillColor = Color.LightGray
-        };
-        graph.Shapes.Add(innerCircle);
-
-        page.Paragraphs.Add(graph);
-    }
-
-    static void AddCardContent(Row mainRow, string title, string body, float margin)
-    {
-        Cell cardCell = mainRow.Cells.Add(""); 
-        cardCell.BackgroundColor = Color.LightBlue; 
-        cardCell.Border = new BorderInfo(BorderSide.All, 1f, Color.Blue); 
-        cardCell.Margin = new MarginInfo(margin, 0, margin, 0);
-
-        TextFragment titleFragment = new TextFragment(title);
-        titleFragment.TextState.FontSize = 10; 
-        titleFragment.TextState.Font = FontRepository.FindFont("Arial-Bold"); 
-        titleFragment.TextState.ForegroundColor = Color.Blue; 
-        titleFragment.HorizontalAlignment = HorizontalAlignment.Left; 
-        titleFragment.VerticalAlignment = VerticalAlignment.Top;
-        cardCell.Paragraphs.Add(titleFragment); 
-
-        TextFragment bodyFragment = new TextFragment(body);
-        bodyFragment.TextState.FontSize = 10; 
-        bodyFragment.TextState.Font = FontRepository.FindFont("Arial"); 
-        bodyFragment.TextState.ForegroundColor = Color.Blue; 
-        bodyFragment.HorizontalAlignment = HorizontalAlignment.Left; 
-        cardCell.Paragraphs.Add(bodyFragment); 
-    }
-
-    static void MainPage(Page page)
-    {
-
-        Image leftImage = new Image
-        {
-            File = @"D:\Aspose_Pdf\Aspose\Aspose\asset\MainPageCards.jpeg",
-            FixWidth = 400, 
-            FixHeight = 100, 
-            HorizontalAlignment = HorizontalAlignment.Left,
-            Margin = new MarginInfo { Top = 50 },
-        };
-        page.Paragraphs.Add(leftImage);
-
-        Image rightImage = new Image
-        {
-            File = @"D:\Aspose_Pdf\Aspose\Aspose\asset\MainPageBanner.jpeg",
-            FixWidth = 170,
-            FixHeight = 170, 
-            HorizontalAlignment = HorizontalAlignment.Right,
-            Margin = new MarginInfo { Top = -100 },
-        };
-        page.Paragraphs.Add(rightImage);
-
-        TextFragment header = new TextFragment("LIMENEAL TALENT\nFULFILMENT\nREPORT")
-        {
-            HorizontalAlignment = HorizontalAlignment.Left,
-            Margin = { Top = 50, Left = 45 },
-            TextState =
-                {
-                    Font = FontRepository.FindFont("Times New Roman"),
-                    FontSize = 40,
-                    ForegroundColor = Color.Blue,
-                    FontStyle = FontStyles.Bold,
-                    LineSpacing = 7
-                }
-        };
-        page.Paragraphs.Add(header);
-
-        TextFragment header1 = new TextFragment("SAMPLE - NOT TO BE SHARED WITHOUT WRITTEN CONSENT OF LIMENEAL SOLUTIONS - FZCO")
-        {
-            HorizontalAlignment = HorizontalAlignment.Center,
-            Margin = { Top = 20 },
-        };
-        header1.TextState.Font = FontRepository.FindFont("Arial-Bold");
-        header1.TextState.FontSize = 12;
-        page.Paragraphs.Add(header1);
-
-        Image CenterImage = new Image
-        {
-            File = @"D:\Aspose_Pdf\Aspose\Aspose\asset\MainPageImage.jpeg",
-            FixWidth = 500, 
-            FixHeight = 340, 
-            HorizontalAlignment = HorizontalAlignment.Center,
-            Margin = new MarginInfo { Top = 10 },
-        };
-
-        page.Paragraphs.Add(CenterImage);
-
-        TextFragment rights = new TextFragment("Limeneal Wheel Dimensions, Virtues and Traits are Copyrighted. All Rights Reserved.")
-        {
-            Margin = { Top = 4, Bottom = 10, Left = 25 },
-        };
-        rights.TextState.Font = FontRepository.FindFont("Times New Roman");
-        rights.TextState.FontSize = 6;
-        page.Paragraphs.Add(rights);
-
-
-    }
-
-    static void SecondPage(Page page)
-    {
-        TextFragment header = new TextFragment()
-        {
-            HorizontalAlignment = HorizontalAlignment.Center,
-            Margin = { Top = 30 }
-        };
-
-        TextSegment mainText = new TextSegment("9 DIMENSIONS OF THE LIMENEAL WHEEL")
+        // Add the second part of the text with different style
+        TextSegment segment2 = new TextSegment(textPart2)
         {
             TextState = new TextState
             {
-                Font = FontRepository.FindFont("Arial-Bold"),
-                FontSize = 18,
-                ForegroundColor = Color.Blue
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 10,
+                FontStyle = FontStyles.Bold | FontStyles.Italic,
+                Font = FontRepository.FindFont("Arial")
             }
         };
+        styledText.Segments.Add(segment2);
 
-        TextSegment registeredSymbol = new TextSegment("®")
+
+
+        TextSegment segment3 = new TextSegment(textPart1)
         {
             TextState = new TextState
             {
-                Font = FontRepository.FindFont("Arial-Bold"),
-                FontSize = 8,
-                ForegroundColor = Color.Blue,
-            },
-        };
-        
-        registeredSymbol.Position = new Position(header.Position.XIndent + 290, header.Position.YIndent + 10);
-
-        header.Segments.Add(mainText);
-        header.Segments.Add(registeredSymbol);
-
-        page.Paragraphs.Add(header);
-
-
-        TextFragment header1 = new TextFragment("SAMPLE - NOT TO BE SHARED WITHOUT WRITTEN CONSENT OF LIMENEAL SOLUTIONS - FZCO")
-        {
-            HorizontalAlignment = HorizontalAlignment.Center,
-            Margin = { Top = 10 },
-        };
-        header1.TextState.Font = FontRepository.FindFont("Arial-Bold");
-        header1.TextState.FontSize = 12;
-        page.Paragraphs.Add(header1);
-
-        Image leftImage = new Image
-        {
-            File = @"D:\Aspose_Pdf\Aspose\Aspose\asset\SecondPageWheel.jpeg",
-            FixWidth = 180, 
-            FixHeight = 160, 
-            HorizontalAlignment = HorizontalAlignment.Center,
-            Margin = new MarginInfo { Top = 10 },
-        };
-        page.Paragraphs.Add(leftImage);
-
-        TextFragment intro = new TextFragment("INTRODUCTION")
-        {
-
-            Margin = { Top = 10 },
-            TextState =
-                {
-                    Font = FontRepository.FindFont("Arial-Bold"),
-                    FontSize = 14,
-                    ForegroundColor = Color.Blue,
-                    HorizontalAlignment = HorizontalAlignment.Center
-                }
-        };
-        page.Paragraphs.Add(intro);
-
-
-        TextFragment content1 = new TextFragment("Limeneal Wheel® is a Human Fulfilment Model, built on the science and philosophy of virtues to discover your Purpose, Passion, and Potential, manifested through 36 virtues and classified under 9 unique dimensions.")
-        {
-
-            Margin = { Top = 3, Left = 30 },
-            TextState =
-                {
-                    Font = FontRepository.FindFont("Arial"),
-                    FontSize = 13,
-                    ForegroundColor = Color.Blue,
-                    LineSpacing = 5
-                }
-        };
-        page.Paragraphs.Add(content1);
-
-        TextFragment content2 = new TextFragment("Limeneal Wheel® is an intellectual proprietary work created and developed by Vivian Selvathurai Alfred, significantly influenced by the work on virtues by the 12th-century philosopher, Thomas Aquinas, and inspiration from ancient philosophers - Augustine of Hippo, Plato, Aristotle, and Thiruvalluvar, the 6th century philosopher from South India.")
-        {
-
-            Margin = { Top = 2, Left = 30 },
-            TextState =
-                {
-                    Font = FontRepository.FindFont("Arial"),
-                    FontSize = 13,
-                    ForegroundColor = Color.Blue,
-                    LineSpacing = 5
-                }
-        };
-        page.Paragraphs.Add(content2);
-
-        TextFragment content3 = new TextFragment("The word Limeneal is derived from the Latin word, “Limen” meaning “Gateway” and “Neal” in Sanskrit meaning “Champion”. Together, they indicate “Gateway of a Champion”.")
-        {
-
-            Margin = { Top = 2, Left = 30 },
-            TextState =
-                {
-                    Font = FontRepository.FindFont("Arial"),
-                    FontSize = 13,
-                    ForegroundColor = Color.Blue,
-                    LineSpacing = 5
-                }
-        };
-        page.Paragraphs.Add(content3);
-
-        TextFragment content4 = new TextFragment("The Limeneal Wheel® virtue mapper tool involves a proprietary virtues benchmarking process that compares degree of virtues required for a career or a job role with those expressed by individuals. Such comparison will then objectively demonstrate, an individual's inclination, effectiveness and fulfillment score.")
-        {
-
-            Margin = { Top = 2, Left = 30 },
-            TextState =
-                {
-                    Font = FontRepository.FindFont("Arial"),
-                    FontSize = 13,
-                    ForegroundColor = Color.Blue,
-                    LineSpacing = 5
-                }
-        };
-        page.Paragraphs.Add(content4);
-
-        TextFragment content5 = new TextFragment("“Where the roads of your Purpose, Passion and Potential meet, your True Calling is found.”")
-        {
-
-            Margin = { Top = 2, Left = 30 },
-            TextState =
-                {
-                    Font = FontRepository.FindFont("Arial-Bold"),
-                    FontSize = 12,
-                    ForegroundColor = Color.Blue,
-                    LineSpacing = 5
-                }
-        };
-        page.Paragraphs.Add(content5);
-
-        Table table = new Table
-        {
-            ColumnWidths = "140 140 250",
-            Margin = new MarginInfo(30, 10, 10, 10),
-            DefaultCellBorder = new BorderInfo(BorderSide.Box, .5f, Color.Blue), 
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 10,
+                FontStyle = FontStyles.Regular,
+                Font = FontRepository.FindFont("Arial")
+            }
         };
 
-        page.Paragraphs.Add(table);
-
-        string[] Text_1 = { "PURPOSE\n\nPASSION\n\nPOTENTIAL", "Is your guiding star\n\nIs what lights your fire\n\nIs what you can become", "You need all 3 in right proportions vs. aspired career/role.\nWe help you to assess this so that not only you follow your purpose but have sufficient fire and strengths to sustain it." };
-
-        Row Row_1 = table.Rows.Add();
-        foreach (string headerText in Text_1)
+        // Add the second part of the text with different style
+        TextSegment segment4 = new TextSegment(textPart3)
         {
-            Cell cell = Row_1.Cells.Add(); 
-
-            cell.Margin = new MarginInfo(5, 0, 0, 2); 
-
-            TextFragment fragment = new TextFragment(headerText)
+            TextState = new TextState
             {
-                TextState =
-                {
-                    FontSize = 12,
-                    ForegroundColor = Color.Blue
-                },
-            };
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 10,
+                FontStyle = FontStyles.Regular,
+                LineSpacing = 5,
+                Font = FontRepository.FindFont("Arial")
+            }
+        };
 
-            cell.Paragraphs.Add(fragment); 
+        styledText.Segments.Add(segment3);
+        styledText.Segments.Add(segment4);
+
+
+        // Add the TextFragment to the cell
+        headerCell.Paragraphs.Add(styledText);
+
+        // Style the cell itself (background, padding, etc.)
+        headerCell.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#DCE1EE"));
+        headerCell.Margin = new MarginInfo(5, 5, 0, 5);
+
+        PageWithSplitContent(page);
+
+    }
+
+    static void Page2(Page page)
+    {
+        PageHeaderContent(page);
+        EndOfThePageBox(page);
+    }
+
+    static void PageHeaderContent(Page page)
+    {
+        Table TableOfContext = new Table
+        {
+            ColumnWidths = "550",
+            Margin = new MarginInfo(10, 1, 10, 10),
+            DefaultCellBorder = new BorderInfo(BorderSide.Bottom, 1.0f, Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8"))),
+        };
+
+        page.Paragraphs.Add(TableOfContext);
+
+        string[] TableOfContextHeaderTexts = { "LIMENEAL TALENT POTENTIAL for Mr. John Smith" };
+
+        Row TableOfContexHeaderRow = TableOfContext.Rows.Add();
+        foreach (string headerText in TableOfContextHeaderTexts)
+        {
+            TableOfContexHeaderRow.Cells.Add(headerText);
         }
+
+        foreach (Cell cell in TableOfContexHeaderRow.Cells)
+        {
+            cell.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#DCE1EE"));
+            cell.DefaultCellTextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 14,
+                FontStyle = FontStyles.Bold,
+                Font = FontRepository.FindFont("Arial")
+            };
+            cell.Paragraphs[0].HorizontalAlignment = HorizontalAlignment.Center;
+            cell.Paragraphs[0].Margin = new MarginInfo(0, 3, 0, 3);
+        }
+
     }
+
+    
+    static void PageWithSplitContent(Page page)
+    {
+        Table layoutTable = new Table
+        {
+            ColumnWidths = "180 380",
+            DefaultCellBorder = new BorderInfo(BorderSide.None),
+            Margin = new MarginInfo(0, 0, 0, 0)
+        };
+
+        page.Paragraphs.Add(layoutTable);
+
+        Row row = layoutTable.Rows.Add();
+
+        // First column: Add graph content
+        Cell graphCell = row.Cells.Add();
+
+
+        //Graph graph = new Graph(100.0, 100.0);
+
+        //// Add a circle to the graph as an example
+        //Circle circle = new Circle(100, 100, 50);
+        //circle.GraphInfo = new GraphInfo
+        //{
+        //    LineWidth = 2,
+        //    Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+        //    FillColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#DCE1EE"))
+        //};
+        //graph.Shapes.Add(circle);
+
+        // Add the graph to the cell
+        //graphCell.Paragraphs.Add();
+
+
+
+        //Second Column: Add Text content
+        Cell textCell = row.Cells.Add();
+        string textPart1 = "Power Dimensions ";
+        string textPart2 = "represent high impact, most preferred, frequently used\b and naturally expressed dimension by an individual.";
+
+        string textPart3 = "Push Dimensions ";
+        string textPart4 = "represent medium impact, sometimes preferred\b dimensions which come with an extra or deliberate effort by the individual.";
+
+        string textPart5 = "Pain Dimensions ";
+        string textPart6 = "represent least impact, rarely preferred dimensions which\b are generally stressful and uncomfortable for an individual to express.";
+
+        PageWithSplitContentRightSideContentTable(textCell, textPart1, textPart2);
+
+
+        Table TableOfContext2 = new Table
+        {
+            ColumnWidths = "100 260",
+            Margin = new MarginInfo(9, 15, 5, 2),
+            DefaultCellBorder = new BorderInfo(BorderSide.None),
+        };
+
+
+        textCell.Paragraphs.Add(TableOfContext2);
+
+        // Define the header text with different styles
+        string textPart21 = "Mentor\nBinder\nPrincipal";
+        string textPart22 = "Most inclined to Guiding\nMost inclined to Bonding\nMost inclined to Research";
+
+        // Create a new row for the header
+        Row TableOfContexHeaderRow21 = TableOfContext2.Rows.Add();
+
+        // Create a new cell
+        Cell headerCell21 = TableOfContexHeaderRow21.Cells.Add();
+        Cell headerCell22 = TableOfContexHeaderRow21.Cells.Add();
+
+        // Create a TextFragment to hold the styled text
+        TextFragment styledText21 = new TextFragment();
+        TextFragment styledText22 = new TextFragment();
+
+        // Add the first part of the text with specific style
+        TextSegment segment21 = new TextSegment(textPart21)
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 10,
+                FontStyle = FontStyles.Regular,
+                LineSpacing = 5,
+                Font = FontRepository.FindFont("Arial")
+            }
+        };
+        styledText21.Segments.Add(segment21);
+
+        // Add the second part of the text with different style
+        TextSegment segment22 = new TextSegment(textPart22)
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 10,
+                FontStyle = FontStyles.Regular,
+                LineSpacing = 5,
+                Font = FontRepository.FindFont("Arial")
+            }
+        };
+        styledText22.Segments.Add(segment22);
+
+        // Add the TextFragment to the cell
+        headerCell21.Paragraphs.Add(styledText21);
+        headerCell22.Paragraphs.Add(styledText22);
+
+        // Style the cell itself (background, padding, etc.)
+        //headerCell.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#DCE1EE"));
+        headerCell21.Margin = new MarginInfo(2, 10, 0, 0);
+        headerCell22.Margin = new MarginInfo(5, 10, 0, 0);
+
+        PageWithSplitContentRightSideContentTable(textCell, textPart3, textPart4);
+
+
+
+        Table TableOfContext3 = new Table
+        {
+            ColumnWidths = "100 260",
+            Margin = new MarginInfo(9, 5, 5, 15),
+            DefaultCellBorder = new BorderInfo(BorderSide.None),
+        };
+
+
+        textCell.Paragraphs.Add(TableOfContext3);
+
+        // Define the header text with different styles
+        string textPart31 = "Charmer\nGuardian\nDominion";
+        string textPart32 = "Moderately inclined to Influencing\nModerately inclined to Discipline\nModerately inclined to Achieving in risks";
+
+        // Create a new row for the header
+        Row TableOfContexHeaderRow31 = TableOfContext3.Rows.Add();
+
+        // Create a new cell
+        Cell headerCell31 = TableOfContexHeaderRow31.Cells.Add();
+        Cell headerCell32 = TableOfContexHeaderRow31.Cells.Add();
+
+        // Create a TextFragment to hold the styled text
+        TextFragment styledText31 = new TextFragment();
+        TextFragment styledText32 = new TextFragment();
+
+        // Add the first part of the text with specific style
+        TextSegment segment31 = new TextSegment(textPart31)
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 10,
+                FontStyle = FontStyles.Regular,
+                LineSpacing = 5,
+                Font = FontRepository.FindFont("Arial")
+            }
+        };
+        styledText31.Segments.Add(segment31);
+
+        // Add the second part of the text with different style
+        TextSegment segment32 = new TextSegment(textPart32)
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 10,
+                FontStyle = FontStyles.Regular,
+                LineSpacing = 5,
+                Font = FontRepository.FindFont("Arial")
+            }
+        };
+        styledText32.Segments.Add(segment32);
+
+        // Add the TextFragment to the cell
+        headerCell31.Paragraphs.Add(styledText31);
+        headerCell32.Paragraphs.Add(styledText32);
+
+        // Style the cell itself (background, padding, etc.)
+        //headerCell.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#DCE1EE"));
+        headerCell31.Margin = new MarginInfo(2, 10, 0, 0);
+        headerCell32.Margin = new MarginInfo(5, 10, 0, 0);
+
+        PageWithSplitContentRightSideContentTable(textCell, textPart5, textPart6);
+
+
+        Table TableOfContext4 = new Table
+        {
+            ColumnWidths = "100 260",
+            Margin = new MarginInfo(9, 5, 5, 15),
+            DefaultCellBorder = new BorderInfo(BorderSide.None),
+        };
+
+
+        textCell.Paragraphs.Add(TableOfContext4);
+
+        // Define the header text with different styles
+        string textPart41 = "Harmonizer\nVisualizer\nAngel";
+        string textPart42 = "Less inclined to Harmony\nLess inclined to Value creating\nModerately inclined to Achieving in risks";
+
+        // Create a new row for the header
+        Row TableOfContexHeaderRow41 = TableOfContext4.Rows.Add();
+
+        // Create a new cell
+        Cell headerCell41 = TableOfContexHeaderRow41.Cells.Add();
+        Cell headerCell42 = TableOfContexHeaderRow41.Cells.Add();
+
+        // Create a TextFragment to hold the styled text
+        TextFragment styledText41 = new TextFragment();
+        TextFragment styledText42 = new TextFragment();
+
+        // Add the first part of the text with specific style
+        TextSegment segment41 = new TextSegment(textPart41)
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 10,
+                FontStyle = FontStyles.Regular,
+                LineSpacing = 5,
+                Font = FontRepository.FindFont("Arial")
+            }
+        };
+        styledText41.Segments.Add(segment41);
+
+        // Add the second part of the text with different style
+        TextSegment segment42 = new TextSegment(textPart42)
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 10,
+                FontStyle = FontStyles.Regular,
+                LineSpacing = 5,
+                Font = FontRepository.FindFont("Arial")
+            }
+        };
+        styledText42.Segments.Add(segment42);
+
+        // Add the TextFragment to the cell
+        headerCell41.Paragraphs.Add(styledText41);
+        headerCell42.Paragraphs.Add(styledText42);
+
+        // Style the cell itself (background, padding, etc.)
+        //headerCell.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#DCE1EE"));
+        headerCell41.Margin = new MarginInfo(2, 10, 0, 0);
+        headerCell42.Margin = new MarginInfo(5, 10, 0, 0);
+
+
+
+    }
+
+    static void PageWithSplitContentRightSideContentTable(Cell textCell, string textPart1, string textPart2)
+    {
+        Table TableOfContext1 = new Table
+        {
+            ColumnWidths = "360",
+            Margin = new MarginInfo(5, 2, 5, 5),
+            DefaultCellBorder = new BorderInfo(BorderSide.None),
+        };
+
+
+        textCell.Paragraphs.Add(TableOfContext1);
+
+        // Define the header text with different styles
+        //string textPart1 = "Power Dimensions ";
+        //string textPart2 = "represent high impact, most preferred, frequently used\b and naturally expressed dimension by an individual.";
+
+        // Create a new row for the header
+        Row TableOfContexHeaderRow1 = TableOfContext1.Rows.Add();
+
+        // Create a new cell
+        Cell headerCell = TableOfContexHeaderRow1.Cells.Add();
+
+        // Create a TextFragment to hold the styled text
+        TextFragment styledText = new TextFragment();
+
+        // Add the first part of the text with specific style
+        TextSegment segment1 = new TextSegment(textPart1)
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 10,
+                FontStyle = FontStyles.Bold,
+                Font = FontRepository.FindFont("Arial")
+            }
+        };
+        styledText.Segments.Add(segment1);
+
+        // Add the second part of the text with different style
+        TextSegment segment2 = new TextSegment(textPart2)
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 10,
+                FontStyle = FontStyles.Regular,
+                LineSpacing = 5,
+                Font = FontRepository.FindFont("Arial")
+            }
+        };
+        styledText.Segments.Add(segment2);
+
+        // Add the TextFragment to the cell
+        headerCell.Paragraphs.Add(styledText);
+
+        // Style the cell itself (background, padding, etc.)
+        headerCell.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#DCE1EE"));
+        headerCell.Margin = new MarginInfo(5, 5, 0, 5);
+
+    }
+
+    static void EndOfThePageBox(Page page)
+    {
+        Table TableOfContext1 = new Table
+        {
+            ColumnWidths = "530",
+            Margin = new MarginInfo(15, 2, 5, 5),
+            DefaultCellBorder = new BorderInfo(BorderSide.None),
+        };
+
+
+        page.Paragraphs.Add(TableOfContext1);
+
+        // Create a new row for the header
+        Row TableOfContexHeaderRow1 = TableOfContext1.Rows.Add();
+
+        // Create a new cell
+        Cell headerCell = TableOfContexHeaderRow1.Cells.Add();
+
+        // Create a TextFragment to hold the styled text
+        TextFragment styledText = new TextFragment();
+
+
+        styledText.Segments.Add(SegmentBoldText("Power Virtues"));
+        styledText.Segments.Add(SegmentRegularText("are highly expressed, come naturally, and effortlessly (Top 12)\n"));
+        styledText.Segments.Add(SegmentBoldText("Push Virtues "));
+        styledText.Segments.Add(SegmentRegularText("are moderately expressed, do not come naturally, and need deliberate effort (Mid 12)\n"));
+        styledText.Segments.Add(SegmentBoldText("Pain Virtues "));
+        styledText.Segments.Add(SegmentRegularText("are less expressed, puts an individual under stress, and needs extraordinary effort (Low 12)\n"));
+
+        // Add the TextFragment to the cell
+        headerCell.Paragraphs.Add(styledText);
+
+        // Style the cell itself (background, padding, etc.)
+        headerCell.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#DCE1EE"));
+        headerCell.Margin = new MarginInfo(5, 5, 0, 5);
+
+    }
+
+    static TextSegment SegmentBoldText(string text)
+    {
+        TextSegment segment1 = new TextSegment(text)
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 10,
+                FontStyle = FontStyles.Bold,
+                LineSpacing = 5,
+                Font = FontRepository.FindFont("Arial")
+            }
+        };
+
+        return segment1;
+    }
+
+    static TextSegment SegmentRegularText(string text)
+    {
+        TextSegment segment1 = new TextSegment(text)
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 10,
+                FontStyle = FontStyles.Regular,
+                LineSpacing = 5,
+                Font = FontRepository.FindFont("Arial")
+            }
+        };
+
+        return segment1;
+    }
+
+
 
 }
