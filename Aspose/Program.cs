@@ -7,12 +7,12 @@ using Microsoft.Data.SqlClient;
 using System;
 using System.Data;
 using System.Drawing.Printing;
+using static System.Net.Mime.MediaTypeNames;
 
 internal class Program
 {
     static void Main(string[] args)
     {
-        string connectionString = "data source=PTSQLTESTDB01;database=TalentAqu;integrated security=true;trustservercertificate = true;";
 
         Document pdfDocument = new Document();
         Page page = pdfDocument.Pages.Add();
@@ -130,7 +130,286 @@ internal class Program
     static void Page2(Page page)
     {
         PageHeaderContent(page);
+
+        Table table = new Table()
+        {
+            ColumnWidths = "65",
+            Margin = new MarginInfo(15, 0, 0, 0),
+            BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#315496")),
+            DefaultCellBorder = new BorderInfo(BorderSide.All, 1.0f, Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#315496"))),
+        };
+        page.Paragraphs.Add(table);
+
+        // Create a new row for the header
+        Row TableHeaderRow = table.Rows.Add();
+
+        // Create a new cell
+        Cell headerCell = TableHeaderRow.Cells.Add();
+
+        // Create a TextFragment to hold the styled text
+        TextFragment styledText = new TextFragment();
+
+        TextSegment segment = new TextSegment("VIRTUES")
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#FFF")),
+                FontSize = 10,
+                FontStyle = FontStyles.Regular,
+                Font = FontRepository.FindFont("Arial")
+            }
+        };
+
+        styledText.Segments.Add(segment);
+
+        // Add the TextFragment to the cell
+        headerCell.Paragraphs.Add(styledText);
+
+        // Style the cell itself (background, padding, etc.)
+        headerCell.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#315496"));
+        headerCell.Margin = new MarginInfo(3, 2, 5, 2);
+
+        Table virtuesTable = new Table()
+        {
+            ColumnWidths = "350 200",
+            Margin = new MarginInfo(15, 0, 0, 0),
+            DefaultCellBorder = new BorderInfo(BorderSide.None, 0.1f),
+        };
+
+
+        Table virtuesTable1 = new Table()
+        {
+            ColumnWidths = "100 250",
+            Margin = new MarginInfo(0, 0, 0, 0),
+            DefaultCellBorder = new BorderInfo(BorderSide.None, 0.5f),
+        };
+
+
+        string[][] rowData = new string[][]
+        {
+            new string[] { "charisma", "persuade and attract others attention"},
+            new string[] { "empathy", "sensitive to the needs and emotions of others"},
+            new string[] { "Creativeness", "providing creative solutions"},
+
+            new string[] { "understanding", "apply logic and reasoning to know cause and effect"},
+            new string[] { "thankfulness", "acknowldges efforts and deeds of others"},
+            new string[] { "orderliness", "precise and systematic"},
+
+            new string[] { "Cooperation", "collaborating with teams and all stakeholders" },
+            new string[] { "wisdom", "sharing perspectives and applying knowledge" },
+            new string[] { "Ambition", "driving for results and targets" },
+
+            new string[] { "friendliness", "friendly and pleasant disposition" },
+            new string[] { "discernment", "distinguishing and choosing between options" },
+            new string[] { "knowledge", "learn and gather information" },
+
+            new string[] { "humility", "being modest and low-profile" },
+            new string[] { "analytical", "evaluates options, weigh pros and cons to decide" },
+            new string[] { "Justice", "unbiased, fair and sincere" },
+
+            new string[] { "Kindness", "eagerly helps others" },
+            new string[] { "hope", "Finding solutions and possibilities" },
+            new string[] { "peace", "calm and unruffled in stressful situations" },
+
+            new string[] { "Solertia", "developing strategies" },
+            new string[] { "faith", "guided by instincts" },
+            new string[] { "counsel", "advising others" },
+
+            new string[] { "innovativeness", "original and innovative" },
+            new string[] { "Trustworthiness", "reliable and committed" },
+            new string[] { "meticulous", "detail oriented" },
+
+            new string[] { "prudence", "thinking and acting to achieve the desired outcome" },
+            new string[] { "love", "prioritizing to serve and care for others" },
+            new string[] { "foresight", "foreseeing challenges" },
+
+            new string[] { "vigilant", "alert and cautious" },
+            new string[] { "forgiveness", "forgives others mistakes and looks forward" },
+            new string[] { "Flexibility", "adapting to situations, people and environment" },
+
+            new string[] { "compassion", "addresses the pains of others" },
+            new string[] { "enthusiasm", "acts with zeal and eagerness" },
+            new string[] { "temperance", "emotionally balanced" },
+
+            new string[] { "patience", "sustaining despite provocation and challenges" },
+            new string[] { "perseverance", "pursuing despite challenges and risks" },
+            new string[] { "fortitude", "courageously dealing with challenges" },
+        };
+
+        // Populate the table
+        foreach (string[] row in rowData)
+        {
+            Row tableRow = virtuesTable1.Rows.Add(); // Add a new row to the table
+
+            foreach (string cellData in row)
+            {
+                Cell cell = tableRow.Cells.Add();
+                
+                TextFragment text = new TextFragment();
+
+                TextSegment segme = new TextSegment(cellData)
+                {
+                    TextState = new TextState
+                    {
+                        ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                        FontSize = 9,
+                        FontStyle = FontStyles.Regular,
+                        Font = FontRepository.FindFont("Arial")
+                    }
+                };
+                text.Segments.Add(segme);
+
+                cell.Paragraphs.Add(text);
+
+                cell.Margin = new MarginInfo(2, 2, 0, 2);
+
+                cell.Border = new BorderInfo(BorderSide.None, 0.5f);
+            }
+        }
+
+        page.Paragraphs.Add(virtuesTable);
+
+        Row virtuesTableRow = virtuesTable.Rows.Add();
+
+        Cell virtuesTableCell1 = virtuesTableRow.Cells.Add();
+
+        virtuesTableCell1.Paragraphs.Add(virtuesTable1);
+
+        Cell virtuesTableCell2 = virtuesTableRow.Cells.Add();
+
+
+
+
+
+        Table virtuesTableBox1 = new Table
+        {
+            ColumnWidths = "100%",
+            DefaultCellBorder = new BorderInfo(BorderSide.None),
+            DefaultCellPadding = new MarginInfo(0, 0, 0, 0),
+            Margin = new MarginInfo(0, 10, 0, 0),
+            HorizontalAlignment = HorizontalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Center,
+        };
+
+        Row rowBox1 = virtuesTableBox1.Rows.Add();
+
+        Cell cellBox1 = rowBox1.Cells.Add();
+        cellBox1.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#DCE1EE"));
+        TextFragment styledTextBox1 = new TextFragment();
+
+        TextSegment segmentBox1 = new TextSegment("STRENGTHS")
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 24, 
+                FontStyle = FontStyles.Regular,
+                Font = FontRepository.FindFont("Arial")
+            }
+        };
+        styledTextBox1.TextState.HorizontalAlignment = HorizontalAlignment.Center;
+
+        styledTextBox1.Segments.Add(segmentBox1);
+
+        cellBox1.Paragraphs.Add(styledTextBox1);
+        cellBox1.Margin = new MarginInfo(5, 60, 5, 60);
+
+
+
+
+
+        Table virtuesTableBox2 = new Table
+        {
+            ColumnWidths = "100%",
+            DefaultCellBorder = new BorderInfo(BorderSide.None),
+            DefaultCellPadding = new MarginInfo(0, 0, 0, 0),
+            Margin = new MarginInfo(0, 10, 0, 0),
+            HorizontalAlignment = HorizontalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Center,
+        };
+
+        // Add a row to the virtues table
+        Row rowBox2 = virtuesTableBox2.Rows.Add();
+
+        // Create a cell with a background color and make it square (cube-shaped)
+        Cell cellBox2 = rowBox2.Cells.Add();
+        cellBox2.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#DCE1EE"));
+
+
+        // Create the TextFragment with centered text
+        TextFragment styledTextBox2 = new TextFragment();
+
+        // Add the text with specific style
+        TextSegment segmentBox2 = new TextSegment("CHALLENGES")
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 24,
+                FontStyle = FontStyles.Regular,
+                Font = FontRepository.FindFont("Arial")
+            }
+        };
+        styledTextBox2.TextState.HorizontalAlignment = HorizontalAlignment.Center;
+
+        styledTextBox2.Segments.Add(segmentBox2);
+
+        // Add the TextFragment to the cell
+        cellBox2.Paragraphs.Add(styledTextBox2);
+        cellBox2.Margin = new MarginInfo(5, 60, 5, 60);
+
+
+
+
+        Table virtuesTableBox3 = new Table
+        {
+            ColumnWidths = "100%",
+            DefaultCellBorder = new BorderInfo(BorderSide.None),
+            DefaultCellPadding = new MarginInfo(0, 0, 0, 0),
+            Margin = new MarginInfo(0, 0, 0, 0),
+            HorizontalAlignment = HorizontalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Center,
+        };
+
+        // Add a row to the virtues table
+        Row rowBox3 = virtuesTableBox3.Rows.Add();
+
+        // Create a cell with a background color and make it square (cube-shaped)
+        Cell cellBox3 = rowBox3.Cells.Add();
+        cellBox3.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#DCE1EE"));
+
+
+        // Create the TextFragment with centered text
+        TextFragment styledTextBox3 = new TextFragment();
+
+        // Add the text with specific style
+        TextSegment segmentBox3 = new TextSegment("BARRIERS")
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 24,
+                FontStyle = FontStyles.Regular,
+                Font = FontRepository.FindFont("Arial")
+            }
+        };
+        styledTextBox3.TextState.HorizontalAlignment = HorizontalAlignment.Center;
+
+        styledTextBox3.Segments.Add(segmentBox3);
+
+        // Add the TextFragment to the cell
+        cellBox3.Paragraphs.Add(styledTextBox3);
+        cellBox3.Margin = new MarginInfo(5, 60, 5, 60);
+
+
+        virtuesTableCell2.Paragraphs.Add(virtuesTableBox1);
+        virtuesTableCell2.Paragraphs.Add(virtuesTableBox2);
+        virtuesTableCell2.Paragraphs.Add(virtuesTableBox3);
+
         EndOfThePageBox(page);
+
+        
+
     }
 
     static void PageHeaderContent(Page page)
@@ -426,10 +705,6 @@ internal class Program
 
         textCell.Paragraphs.Add(TableOfContext1);
 
-        // Define the header text with different styles
-        //string textPart1 = "Power Dimensions ";
-        //string textPart2 = "represent high impact, most preferred, frequently used\b and naturally expressed dimension by an individual.";
-
         // Create a new row for the header
         Row TableOfContexHeaderRow1 = TableOfContext1.Rows.Add();
 
@@ -547,6 +822,50 @@ internal class Program
         return segment1;
     }
 
+    static void AddVirtuesBlockToRow(Cell targetCell, string text)
+    {
+        // Create a table for the virtues block
+        Table virtuesTable = new Table
+        {
+            ColumnWidths = "100%",
+            DefaultCellBorder = new BorderInfo(BorderSide.None),
+            DefaultCellPadding = new MarginInfo(10, 10, 10, 10),
+            HorizontalAlignment = HorizontalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Center,
+        };
+
+        // Add a row to the virtues table
+        Row row = virtuesTable.Rows.Add();
+
+        // Create a cell with a background color
+        Cell cell = row.Cells.Add();
+        cell.BackgroundColor = Color.FromRgb(System.Drawing.Color.LightBlue);
+
+        TextFragment styledText = new TextFragment();
+
+        // Add the text with specific style
+        TextSegment segment = new TextSegment(text)
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 24,
+                FontStyle = FontStyles.Bold,
+                Font = FontRepository.FindFont("Arial")
+            }
+        };
+        styledText.Segments.Add(segment);
+
+        // Add the TextFragment to the cell
+        cell.Paragraphs.Add(styledText);
+
+        // Style the cell itself (background, padding, etc.)
+        cell.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#DCE1EE"));
+        cell.Margin = new MarginInfo(15, 15, 15, 15);
+
+        // Add the virtues table as a paragraph inside the target cell
+        targetCell.Paragraphs.Add(virtuesTable);
+    }
 
 
 }
