@@ -8,6 +8,11 @@ using System;
 using System.Data;
 using System.Drawing.Printing;
 using static System.Net.Mime.MediaTypeNames;
+using Aspose.Cells;
+using Aspose.Cells.Drawing;
+using Aspose.Cells.Charts;
+using Aspose.Cells.Rendering;
+
 
 internal class Program
 {
@@ -42,24 +47,18 @@ internal class Program
             DefaultCellBorder = new BorderInfo(BorderSide.None),
         };
 
-        // Add the table to the page
         page.Paragraphs.Add(TableOfContext1);
 
-        // Define the header text with different styles
         string textPart1 = "The Limeneal Wheel® ";
         string textPart2 = "Model provides insight into individual's Power, Push and Pain dimensions\n\n";
         string textPart3 = "assessment tool, identifies individual's Power, Push and Pain dimensions through which an individual interacts with others, makes decisions or takes actions.";
 
-        // Create a new row for the header
-        Row TableOfContexHeaderRow1 = TableOfContext1.Rows.Add();
+        Aspose.Pdf.Row TableOfContexHeaderRow1 = TableOfContext1.Rows.Add();
 
-        // Create a new cell
-        Cell headerCell = TableOfContexHeaderRow1.Cells.Add();
+        Aspose.Pdf.Cell headerCell = TableOfContexHeaderRow1.Cells.Add();
 
-        // Create a TextFragment to hold the styled text
         TextFragment styledText = new TextFragment();
 
-        // Add the first part of the text with specific style
         TextSegment segment1 = new TextSegment(textPart1)
         {
             
@@ -73,7 +72,6 @@ internal class Program
         };
         styledText.Segments.Add(segment1);
 
-        // Add the second part of the text with different style
         TextSegment segment2 = new TextSegment(textPart2)
         {
             TextState = new TextState
@@ -99,7 +97,6 @@ internal class Program
             }
         };
 
-        // Add the second part of the text with different style
         TextSegment segment4 = new TextSegment(textPart3)
         {
             TextState = new TextState
@@ -116,10 +113,8 @@ internal class Program
         styledText.Segments.Add(segment4);
 
 
-        // Add the TextFragment to the cell
         headerCell.Paragraphs.Add(styledText);
 
-        // Style the cell itself (background, padding, etc.)
         headerCell.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#DCE1EE"));
         headerCell.Margin = new MarginInfo(5, 5, 0, 5);
 
@@ -140,13 +135,10 @@ internal class Program
         };
         page.Paragraphs.Add(table);
 
-        // Create a new row for the header
-        Row TableHeaderRow = table.Rows.Add();
+        Aspose.Pdf.Row TableHeaderRow = table.Rows.Add();
 
-        // Create a new cell
-        Cell headerCell = TableHeaderRow.Cells.Add();
+        Aspose.Pdf.Cell headerCell = TableHeaderRow.Cells.Add();
 
-        // Create a TextFragment to hold the styled text
         TextFragment styledText = new TextFragment();
 
         TextSegment segment = new TextSegment("VIRTUES")
@@ -162,10 +154,8 @@ internal class Program
 
         styledText.Segments.Add(segment);
 
-        // Add the TextFragment to the cell
         headerCell.Paragraphs.Add(styledText);
 
-        // Style the cell itself (background, padding, etc.)
         headerCell.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#315496"));
         headerCell.Margin = new MarginInfo(3, 2, 5, 2);
 
@@ -236,14 +226,13 @@ internal class Program
             new string[] { "fortitude", "courageously dealing with challenges" },
         };
 
-        // Populate the table
         foreach (string[] row in rowData)
         {
-            Row tableRow = virtuesTable1.Rows.Add(); // Add a new row to the table
+            Aspose.Pdf.Row tableRow = virtuesTable1.Rows.Add(); 
 
             foreach (string cellData in row)
             {
-                Cell cell = tableRow.Cells.Add();
+                Aspose.Pdf.Cell cell = tableRow.Cells.Add();
                 
                 TextFragment text = new TextFragment();
 
@@ -269,13 +258,13 @@ internal class Program
 
         page.Paragraphs.Add(virtuesTable);
 
-        Row virtuesTableRow = virtuesTable.Rows.Add();
+        Aspose.Pdf.Row virtuesTableRow = virtuesTable.Rows.Add();
 
-        Cell virtuesTableCell1 = virtuesTableRow.Cells.Add();
+        Aspose.Pdf.Cell virtuesTableCell1 = virtuesTableRow.Cells.Add();
 
         virtuesTableCell1.Paragraphs.Add(virtuesTable1);
 
-        Cell virtuesTableCell2 = virtuesTableRow.Cells.Add();
+        Aspose.Pdf.Cell virtuesTableCell2 = virtuesTableRow.Cells.Add();
 
 
 
@@ -291,9 +280,9 @@ internal class Program
             VerticalAlignment = VerticalAlignment.Center,
         };
 
-        Row rowBox1 = virtuesTableBox1.Rows.Add();
+        Aspose.Pdf.Row rowBox1 = virtuesTableBox1.Rows.Add();
 
-        Cell cellBox1 = rowBox1.Cells.Add();
+        Aspose.Pdf.Cell cellBox1 = rowBox1.Cells.Add();
         cellBox1.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#DCE1EE"));
         TextFragment styledTextBox1 = new TextFragment();
 
@@ -328,18 +317,14 @@ internal class Program
             VerticalAlignment = VerticalAlignment.Center,
         };
 
-        // Add a row to the virtues table
-        Row rowBox2 = virtuesTableBox2.Rows.Add();
+        Aspose.Pdf.Row rowBox2 = virtuesTableBox2.Rows.Add();
 
-        // Create a cell with a background color and make it square (cube-shaped)
-        Cell cellBox2 = rowBox2.Cells.Add();
+        Aspose.Pdf.Cell cellBox2 = rowBox2.Cells.Add();
         cellBox2.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#DCE1EE"));
 
 
-        // Create the TextFragment with centered text
         TextFragment styledTextBox2 = new TextFragment();
 
-        // Add the text with specific style
         TextSegment segmentBox2 = new TextSegment("CHALLENGES")
         {
             TextState = new TextState
@@ -354,7 +339,6 @@ internal class Program
 
         styledTextBox2.Segments.Add(segmentBox2);
 
-        // Add the TextFragment to the cell
         cellBox2.Paragraphs.Add(styledTextBox2);
         cellBox2.Margin = new MarginInfo(5, 60, 5, 60);
 
@@ -371,18 +355,13 @@ internal class Program
             VerticalAlignment = VerticalAlignment.Center,
         };
 
-        // Add a row to the virtues table
-        Row rowBox3 = virtuesTableBox3.Rows.Add();
+        Aspose.Pdf.Row rowBox3 = virtuesTableBox3.Rows.Add();
 
-        // Create a cell with a background color and make it square (cube-shaped)
-        Cell cellBox3 = rowBox3.Cells.Add();
+        Aspose.Pdf.Cell cellBox3 = rowBox3.Cells.Add();
         cellBox3.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#DCE1EE"));
 
-
-        // Create the TextFragment with centered text
         TextFragment styledTextBox3 = new TextFragment();
 
-        // Add the text with specific style
         TextSegment segmentBox3 = new TextSegment("BARRIERS")
         {
             TextState = new TextState
@@ -397,7 +376,6 @@ internal class Program
 
         styledTextBox3.Segments.Add(segmentBox3);
 
-        // Add the TextFragment to the cell
         cellBox3.Paragraphs.Add(styledTextBox3);
         cellBox3.Margin = new MarginInfo(5, 60, 5, 60);
 
@@ -425,13 +403,13 @@ internal class Program
 
         string[] TableOfContextHeaderTexts = { "LIMENEAL TALENT POTENTIAL for Mr. John Smith" };
 
-        Row TableOfContexHeaderRow = TableOfContext.Rows.Add();
+        Aspose.Pdf.Row TableOfContexHeaderRow = TableOfContext.Rows.Add();
         foreach (string headerText in TableOfContextHeaderTexts)
         {
             TableOfContexHeaderRow.Cells.Add(headerText);
         }
 
-        foreach (Cell cell in TableOfContexHeaderRow.Cells)
+        foreach (Aspose.Pdf.Cell cell in TableOfContexHeaderRow.Cells)
         {
             cell.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#DCE1EE"));
             cell.DefaultCellTextState = new TextState
@@ -459,11 +437,11 @@ internal class Program
 
         page.Paragraphs.Add(layoutTable);
 
-        Row row = layoutTable.Rows.Add();
+        Aspose.Pdf.Row row = layoutTable.Rows.Add();
 
-        // First column: Add graph content
-        Cell graphCell = row.Cells.Add();
+        Aspose.Pdf.Cell graphCell = row.Cells.Add();
 
+        BarGraph(graphCell);
 
         //Graph graph = new Graph(100.0, 100.0);
 
@@ -483,7 +461,7 @@ internal class Program
 
 
         //Second Column: Add Text content
-        Cell textCell = row.Cells.Add();
+        Aspose.Pdf.Cell textCell = row.Cells.Add();
         string textPart1 = "Power Dimensions ";
         string textPart2 = "represent high impact, most preferred, frequently used\b and naturally expressed dimension by an individual.";
 
@@ -511,11 +489,11 @@ internal class Program
         string textPart22 = "Most inclined to Guiding\nMost inclined to Bonding\nMost inclined to Research";
 
         // Create a new row for the header
-        Row TableOfContexHeaderRow21 = TableOfContext2.Rows.Add();
+        Aspose.Pdf.Row TableOfContexHeaderRow21 = TableOfContext2.Rows.Add();
 
         // Create a new cell
-        Cell headerCell21 = TableOfContexHeaderRow21.Cells.Add();
-        Cell headerCell22 = TableOfContexHeaderRow21.Cells.Add();
+        Aspose.Pdf.Cell headerCell21 = TableOfContexHeaderRow21.Cells.Add();
+        Aspose.Pdf.Cell headerCell22 = TableOfContexHeaderRow21.Cells.Add();
 
         // Create a TextFragment to hold the styled text
         TextFragment styledText21 = new TextFragment();
@@ -577,11 +555,11 @@ internal class Program
         string textPart32 = "Moderately inclined to Influencing\nModerately inclined to Discipline\nModerately inclined to Achieving in risks";
 
         // Create a new row for the header
-        Row TableOfContexHeaderRow31 = TableOfContext3.Rows.Add();
+        Aspose.Pdf.Row TableOfContexHeaderRow31 = TableOfContext3.Rows.Add();
 
         // Create a new cell
-        Cell headerCell31 = TableOfContexHeaderRow31.Cells.Add();
-        Cell headerCell32 = TableOfContexHeaderRow31.Cells.Add();
+        Aspose.Pdf.Cell headerCell31 = TableOfContexHeaderRow31.Cells.Add();
+        Aspose.Pdf.Cell headerCell32 = TableOfContexHeaderRow31.Cells.Add();
 
         // Create a TextFragment to hold the styled text
         TextFragment styledText31 = new TextFragment();
@@ -642,11 +620,11 @@ internal class Program
         string textPart42 = "Less inclined to Harmony\nLess inclined to Value creating\nModerately inclined to Achieving in risks";
 
         // Create a new row for the header
-        Row TableOfContexHeaderRow41 = TableOfContext4.Rows.Add();
+        Aspose.Pdf.Row TableOfContexHeaderRow41 = TableOfContext4.Rows.Add();
 
         // Create a new cell
-        Cell headerCell41 = TableOfContexHeaderRow41.Cells.Add();
-        Cell headerCell42 = TableOfContexHeaderRow41.Cells.Add();
+        Aspose.Pdf.Cell headerCell41 = TableOfContexHeaderRow41.Cells.Add();
+        Aspose.Pdf.Cell headerCell42 = TableOfContexHeaderRow41.Cells.Add();
 
         // Create a TextFragment to hold the styled text
         TextFragment styledText41 = new TextFragment();
@@ -693,7 +671,7 @@ internal class Program
 
     }
 
-    static void PageWithSplitContentRightSideContentTable(Cell textCell, string textPart1, string textPart2)
+    static void PageWithSplitContentRightSideContentTable(Aspose.Pdf.Cell textCell, string textPart1, string textPart2)
     {
         Table TableOfContext1 = new Table
         {
@@ -705,16 +683,12 @@ internal class Program
 
         textCell.Paragraphs.Add(TableOfContext1);
 
-        // Create a new row for the header
-        Row TableOfContexHeaderRow1 = TableOfContext1.Rows.Add();
+        Aspose.Pdf.Row TableOfContexHeaderRow1 = TableOfContext1.Rows.Add();
 
-        // Create a new cell
-        Cell headerCell = TableOfContexHeaderRow1.Cells.Add();
+        Aspose.Pdf.Cell headerCell = TableOfContexHeaderRow1.Cells.Add();
 
-        // Create a TextFragment to hold the styled text
         TextFragment styledText = new TextFragment();
 
-        // Add the first part of the text with specific style
         TextSegment segment1 = new TextSegment(textPart1)
         {
             TextState = new TextState
@@ -763,10 +737,10 @@ internal class Program
         page.Paragraphs.Add(TableOfContext1);
 
         // Create a new row for the header
-        Row TableOfContexHeaderRow1 = TableOfContext1.Rows.Add();
+        Aspose.Pdf.Row TableOfContexHeaderRow1 = TableOfContext1.Rows.Add();
 
         // Create a new cell
-        Cell headerCell = TableOfContexHeaderRow1.Cells.Add();
+        Aspose.Pdf.Cell headerCell = TableOfContexHeaderRow1.Cells.Add();
 
         // Create a TextFragment to hold the styled text
         TextFragment styledText = new TextFragment();
@@ -822,9 +796,8 @@ internal class Program
         return segment1;
     }
 
-    static void AddVirtuesBlockToRow(Cell targetCell, string text)
+    static void AddVirtuesBlockToRow(Aspose.Pdf.Cell targetCell, string text)
     {
-        // Create a table for the virtues block
         Table virtuesTable = new Table
         {
             ColumnWidths = "100%",
@@ -834,16 +807,13 @@ internal class Program
             VerticalAlignment = VerticalAlignment.Center,
         };
 
-        // Add a row to the virtues table
-        Row row = virtuesTable.Rows.Add();
+        Aspose.Pdf.Row row = virtuesTable.Rows.Add();
 
-        // Create a cell with a background color
-        Cell cell = row.Cells.Add();
+        Aspose.Pdf.Cell cell = row.Cells.Add();
         cell.BackgroundColor = Color.FromRgb(System.Drawing.Color.LightBlue);
 
         TextFragment styledText = new TextFragment();
 
-        // Add the text with specific style
         TextSegment segment = new TextSegment(text)
         {
             TextState = new TextState
@@ -856,16 +826,75 @@ internal class Program
         };
         styledText.Segments.Add(segment);
 
-        // Add the TextFragment to the cell
         cell.Paragraphs.Add(styledText);
 
-        // Style the cell itself (background, padding, etc.)
         cell.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#DCE1EE"));
         cell.Margin = new MarginInfo(15, 15, 15, 15);
 
-        // Add the virtues table as a paragraph inside the target cell
         targetCell.Paragraphs.Add(virtuesTable);
     }
+
+
+    static void BarGraph(Aspose.Pdf.Cell leftCell)
+    {
+        if (leftCell == null)
+        {
+            throw new ArgumentNullException(nameof(leftCell), "The leftCell argument cannot be null.");
+        }
+
+        var workbook = new Aspose.Cells.Workbook();
+        var worksheet = workbook.Worksheets[0];
+
+        workbook.DefaultStyle.Font.Name = "Arial";
+
+        worksheet.Cells["A1"].Value = "Category";
+        worksheet.Cells["B1"].Value = "Mentor";
+        worksheet.Cells["C1"].Value = "Binder";
+        worksheet.Cells["D1"].Value = "Principal";
+
+        worksheet.Cells["B2"].Value = 71.4;
+        worksheet.Cells["C2"].Value = 71.4;
+        worksheet.Cells["D2"].Value = 67.3;
+
+        int chartIndex = worksheet.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 5, 0, 15, 5);
+        var chart = worksheet.Charts[chartIndex];
+
+        chart.Title.Text = "POWER";
+        chart.Title.Font.Color = Aspose.Cells.Drawing.ColorHelper.FromOleColor(0x2F5596);
+        chart.Title.Height = 10;
+        chart.Title.Font.Name = "Arial";
+        chart.NSeries.Add("B2:D2", true);
+
+        chart.Legend.Font.Name = "Arial";
+
+        chart.PlotArea.Area.FillFormat.SolidFill.Color = Aspose.Cells.Drawing.ColorHelper.FromOleColor(0xFFFFFF);
+
+        //chart.NSeries[0].Area.FillFormat.SolidFill.Color = Aspose.Cells.Drawing.ColorHelper.FromOleColor(0x2F5498); // Mentor (Blue)
+        //chart.NSeries[1].Area.FillFormat.SolidFill.Color = Aspose.Cells.Drawing.ColorHelper.FromOleColor(0x4473C5); // Binder (Light Blue)
+        //chart.NSeries[2].Area.FillFormat.SolidFill.Color = Aspose.Cells.Drawing.ColorHelper.FromOleColor(0xB4C7E7); // Principal (Dark Blue)
+
+
+        var imagePath = "chart.png";
+        chart.ToImage(imagePath, new Aspose.Cells.Rendering.ImageOrPrintOptions
+        {
+            ImageType = Aspose.Cells.Drawing.ImageType.Png
+        });
+
+        // Check if the leftCell is still valid before adding the image
+        if (leftCell != null)
+        {
+            Aspose.Pdf.Image chartImage = new Aspose.Pdf.Image
+            {
+                File = imagePath
+            };
+            leftCell.Paragraphs.Add(chartImage);
+        }
+        else
+        {
+            Console.WriteLine("Error: leftCell is null.");
+        }
+    }
+
 
 
 }
