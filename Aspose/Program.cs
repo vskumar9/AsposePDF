@@ -12,6 +12,7 @@ using Aspose.Cells;
 using Aspose.Cells.Drawing;
 using Aspose.Cells.Charts;
 using Aspose.Cells.Rendering;
+using System.Globalization;
 
 
 internal class Program
@@ -441,24 +442,13 @@ internal class Program
 
         Aspose.Pdf.Cell graphCell = row.Cells.Add();
 
-        BarGraph(graphCell);
+        //BarGraph(graphCell);
+        Program p = new Program();
+        p.BarGraph(graphCell, 71.4f, 71.4f, 64.5f, "POWER", "Mentor", "Binder", "Principal");
+        p.BarGraph(graphCell, 63.7f, 62.3f, 55.6f, "PUSH", "Charmer", "Guardian", "Dominion");
+        p.BarGraph(graphCell, 51.6f, 39.9f, 37.7f, "PAIN", "Harmonizer", "Visualizer", "Angel");
 
-        //Graph graph = new Graph(100.0, 100.0);
-
-        //// Add a circle to the graph as an example
-        //Circle circle = new Circle(100, 100, 50);
-        //circle.GraphInfo = new GraphInfo
-        //{
-        //    LineWidth = 2,
-        //    Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
-        //    FillColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#DCE1EE"))
-        //};
-        //graph.Shapes.Add(circle);
-
-        // Add the graph to the cell
-        //graphCell.Paragraphs.Add();
-
-
+        
 
         //Second Column: Add Text content
         Aspose.Pdf.Cell textCell = row.Cells.Add();
@@ -835,59 +825,119 @@ internal class Program
     }
 
 
-    static void BarGraph(Aspose.Pdf.Cell leftCell)
+    public void BarGraph(Aspose.Pdf.Cell leftCell, float B2, float C2, float D2, string title, string series1, string series2, string series3)
     {
         if (leftCell == null)
         {
             throw new ArgumentNullException(nameof(leftCell), "The leftCell argument cannot be null.");
         }
 
+        CultureInfo culture = new CultureInfo("en-US");
+        Thread.CurrentThread.CurrentCulture = culture;
+        Thread.CurrentThread.CurrentUICulture = culture;
+
         var workbook = new Aspose.Cells.Workbook();
         var worksheet = workbook.Worksheets[0];
 
         workbook.DefaultStyle.Font.Name = "Arial";
 
-        worksheet.Cells["A1"].Value = "Category";
-        worksheet.Cells["B1"].Value = "Mentor";
-        worksheet.Cells["C1"].Value = "Binder";
-        worksheet.Cells["D1"].Value = "Principal";
+        //worksheet.Cells["A1"].Value = "Category";
+        //worksheet.Cells["B1"].Value = "Mentor";
+        //worksheet.Cells["C1"].Value = "Binder";
+        //worksheet.Cells["D1"].Value = "Principal";
 
-        worksheet.Cells["B2"].Value = 71.4;
-        worksheet.Cells["C2"].Value = 71.4;
-        worksheet.Cells["D2"].Value = 67.3;
+        worksheet.Cells["B2"].Value = B2;
+        worksheet.Cells["C2"].Value = C2;
+        worksheet.Cells["D2"].Value = D2;
+
+
+        var styleCell1 = worksheet.Cells["B2"].GetStyle();
+        var styleCell2 = worksheet.Cells["C2"].GetStyle();
+        var styleCell3 = worksheet.Cells["D2"].GetStyle();
+
+        styleCell1.Pattern = BackgroundType.Solid;
+        styleCell2.Pattern = BackgroundType.Solid;
+        styleCell3.Pattern = BackgroundType.Solid;
+
+        styleCell1.ForegroundColor = System.Drawing.ColorTranslator.FromHtml("#2F5596");
+        styleCell2.ForegroundColor = System.Drawing.ColorTranslator.FromHtml("#4473C5");
+        styleCell3.ForegroundColor = System.Drawing.ColorTranslator.FromHtml("#B4C7E7");
+
+        worksheet.Cells["B2"].SetStyle(styleCell1);
+        worksheet.Cells["C2"].SetStyle(styleCell2);
+        worksheet.Cells["D2"].SetStyle(styleCell3);
+
+        //worksheet.Cells["B2"].SetStyle(System.Drawing.ColorTranslator.FromHtml("#2F5596"));
+        //worksheet.Cells["B2"].SetStyle(System.Drawing.ColorTranslator.FromHtml("#4473C5"));
+        //worksheet.Cells["B2"].SetStyle(System.Drawing.ColorTranslator.FromHtml("#B4C7E8"));
 
         int chartIndex = worksheet.Charts.Add(Aspose.Cells.Charts.ChartType.Column, 5, 0, 15, 5);
         var chart = worksheet.Charts[chartIndex];
 
-        chart.Title.Text = "POWER";
+        chart.Title.Text = title;
         chart.Title.Font.Color = Aspose.Cells.Drawing.ColorHelper.FromOleColor(0x2F5596);
-        chart.Title.Height = 10;
         chart.Title.Font.Name = "Arial";
         chart.NSeries.Add("B2:D2", true);
+        chart.NSeries[0].Name = series1;
+        chart.NSeries[1].Name = series2;
+        chart.NSeries[2].Name = series3;
 
-        chart.Legend.Font.Name = "Arial";
 
         chart.PlotArea.Area.FillFormat.SolidFill.Color = Aspose.Cells.Drawing.ColorHelper.FromOleColor(0xFFFFFF);
 
-        //chart.NSeries[0].Area.FillFormat.SolidFill.Color = Aspose.Cells.Drawing.ColorHelper.FromOleColor(0x2F5498); // Mentor (Blue)
-        //chart.NSeries[1].Area.FillFormat.SolidFill.Color = Aspose.Cells.Drawing.ColorHelper.FromOleColor(0x4473C5); // Binder (Light Blue)
-        //chart.NSeries[2].Area.FillFormat.SolidFill.Color = Aspose.Cells.Drawing.ColorHelper.FromOleColor(0xB4C7E7); // Principal (Dark Blue)
+        //var seriesColor = Aspose.Cells.Drawing.ColorHelper.FromOleColor(0xFFFFFF);
+
+        //chart.NSeries[1].Area.FillFormat.SolidFill.Color = seriesColor;
+        //chart.NSeries[2].Area.FillFormat.SolidFill.Color = seriesColor;
 
 
-        var imagePath = "chart.png";
+        //chart.ValueAxis.IsVisible = false;
+        chart.CategoryAxis.IsVisible = false;;
+
+        var imagePath = title+"chart.png";
         chart.ToImage(imagePath, new Aspose.Cells.Rendering.ImageOrPrintOptions
         {
             ImageType = Aspose.Cells.Drawing.ImageType.Png
         });
 
-        // Check if the leftCell is still valid before adding the image
         if (leftCell != null)
         {
             Aspose.Pdf.Image chartImage = new Aspose.Pdf.Image
             {
                 File = imagePath
             };
-            leftCell.Paragraphs.Add(chartImage);
+
+            chartImage.FixWidth = 150;
+            chartImage.FixHeight = 110;
+
+            chartImage.Margin = new Aspose.Pdf.MarginInfo
+            {
+                Left = 20,
+                Right = 5,
+                Top = 5,
+                Bottom = 5
+            };
+
+           leftCell.Paragraphs.Add(chartImage);
+
+            //Aspose.Pdf.Drawing.Graph shadowGraph = new Aspose.Pdf.Drawing.Graph((float)(chartImage.FixWidth + 10), (float)(chartImage.FixHeight + 10));
+
+            //// Define the shadow rectangle (slightly offset to the right and bottom of the image)
+            //Aspose.Pdf.Drawing.Rectangle shadowRect = new Aspose.Pdf.Drawing.Rectangle(
+            //    5,  // X-offset
+            //    5,  // Y-offset
+            //    (float)chartImage.FixWidth,   // Width
+            //    (float)chartImage.FixHeight   // Height
+            //);
+
+            //shadowRect.GraphInfo = new Aspose.Pdf.GraphInfo
+            //{
+            //    Color = Aspose.Pdf.Color.Gray, // Shadow outline color
+            //    FillColor = Aspose.Pdf.Color.FromArgb(1, 235, 237, 249) // Light shadow with 50% transparency
+            //};
+
+            //shadowGraph.Shapes.Add(shadowRect);
+            //leftCell.Paragraphs.Add(shadowGraph);
         }
         else
         {
