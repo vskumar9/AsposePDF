@@ -142,53 +142,55 @@ internal class Program
         new object[] { "Power", "Faith", 54 },
         new object[] { "Power", "Counsel", 51 },
 
-        //// Category "Push"
-        //new object[] { "Push", "Charisma", 63 },
-        //new object[] { "Push", "Empathy", 58 },
-        //new object[] { "Push", "Creativeness", 56 },
-        //new object[] { "Push", "Understanding", 52 },
-        //new object[] { "Push", "Thankfulness", 51 },
-        //new object[] { "Push", "Orderliness", 50 },
-        //new object[] { "Push", "Cooperation", 46 },
-        //new object[] { "Push", "Wisdom", 45 },
-        //new object[] { "Push", "Ambition", 41 },
-        //new object[] { "Push", "Friendliness", 39 },
-        //new object[] { "Push", "Discernment", 38 },
-        //new object[] { "Push", "Knowledge", 37 },
-        //new object[] { "Push", "Humility", 34 },
-        //new object[] { "Push", "Analytical", 32 },
-        //new object[] { "Push", "Justice", 30 },
-        //new object[] { "Push", "Kindness", 28 },
-        //new object[] { "Push", "Hope", 26 },
-        //new object[] { "Push", "Peace", 24 },
-        //new object[] { "Push", "Faith", 22 },
-        //new object[] { "Push", "Counsel", 20 },
+        // Category "Push"
+        new object[] { "Push", "Charisma", 63 },
+        new object[] { "Push", "Empathy", 58 },
+        new object[] { "Push", "Creativeness", 56 },
+        new object[] { "Push", "Understanding", 52 },
+        new object[] { "Push", "Thankfulness", 51 },
+        new object[] { "Push", "Orderliness", 50 },
+        new object[] { "Push", "Cooperation", 46 },
+        new object[] { "Push", "Wisdom", 45 },
+        new object[] { "Push", "Ambition", 41 },
+        new object[] { "Push", "Friendliness", 39 },
+        new object[] { "Push", "Discernment", 38 },
+        new object[] { "Push", "Knowledge", 37 },
+        new object[] { "Push", "Humility", 34 },
+        new object[] { "Push", "Analytical", 32 },
+        new object[] { "Push", "Justice", 30 },
+        new object[] { "Push", "Kindness", 28 },
+        new object[] { "Push", "Hope", 26 },
+        new object[] { "Push", "Peace", 24 },
+        new object[] { "Push", "Faith", 22 },
+        new object[] { "Push", "Counsel", 20 },
 
-        //// Category "Pain"
-        //new object[] { "Pain", "Charisma", 30 },
-        //new object[] { "Pain", "Empathy", 26 },
-        //new object[] { "Pain", "Creativeness", 24 },
-        //new object[] { "Pain", "Understanding", 22 },
-        //new object[] { "Pain", "Thankfulness", 20 },
-        //new object[] { "Pain", "Orderliness", 18 },
-        //new object[] { "Pain", "Cooperation", 16 },
-        //new object[] { "Pain", "Wisdom", 14 },
-        //new object[] { "Pain", "Ambition", 12 },
-        //new object[] { "Pain", "Friendliness", 10 },
-        //new object[] { "Pain", "Discernment", 8 },
-        //new object[] { "Pain", "Knowledge", 6 },
-        //new object[] { "Pain", "Humility", 4 },
-        //new object[] { "Pain", "Analytical", 2 },
-        //new object[] { "Pain", "Justice", 1 },
-        //new object[] { "Pain", "Kindness", 0 },
-        //new object[] { "Pain", "Hope", 0 },
-        //new object[] { "Pain", "Peace", 0 },
-        //new object[] { "Pain", "Faith", 0 },
-        //new object[] { "Pain", "Counsel", 0 }
+        // Category "Pain"
+        new object[] { "Pain", "Charisma", 30 },
+        new object[] { "Pain", "Empathy", 26 },
+        new object[] { "Pain", "Creativeness", 24 },
+        new object[] { "Pain", "Understanding", 22 },
+        new object[] { "Pain", "Thankfulness", 20 },
+        new object[] { "Pain", "Orderliness", 18 },
+        new object[] { "Pain", "Cooperation", 16 },
+        new object[] { "Pain", "Wisdom", 14 },
+        new object[] { "Pain", "Ambition", 12 },
+        new object[] { "Pain", "Friendliness", 10 },
+        new object[] { "Pain", "Discernment", 8 },
+        new object[] { "Pain", "Knowledge", 6 },
+        new object[] { "Pain", "Humility", 4 },
+        new object[] { "Pain", "Analytical", 2 },
+        new object[] { "Pain", "Justice", 1 },
+        new object[] { "Pain", "Kindness", 0 },
+        new object[] { "Pain", "Hope", 0 },
+        new object[] { "Pain", "Peace", 0 },
+        new object[] { "Pain", "Faith", 0 },
+        new object[] { "Pain", "Counsel", 0 }
     };
 
         // Example usage: Passing data to generate the bar graph
         //new Program().MainBarGraph(page, values);
+
+        new Program().VirtuesBarGraph(page, values);
 
 
 
@@ -491,7 +493,6 @@ internal class Program
 
     }
 
-    
     static void PageWithSplitContent(Page page)
     {
         Table layoutTable = new Table
@@ -899,7 +900,6 @@ internal class Program
         targetCell.Paragraphs.Add(virtuesTable);
     }
 
-
     public void AddBarGraphDimensions(Cell maingraph, string title, float p1, float p2, float p3, string p1Name, string p2Name, string p3Name)
     {
         Table table = new Table()
@@ -1092,7 +1092,7 @@ internal class Program
 
 
         
-        Graph graph = new Graph(70.0, 50.0 + 1);
+        Graph graph = new Graph(70.0, 51.0);
          
         Aspose.Pdf.Drawing.Rectangle p1Bar = new Aspose.Pdf.Drawing.Rectangle(0, 0, 20, (float)(p1 * 0.50))
         {
@@ -1131,8 +1131,6 @@ internal class Program
 
 
         Cell seriesCell = nesterTabelRow.Cells.Add();
-
-
 
         Table seriesTable = new Table()
         {
@@ -1191,7 +1189,6 @@ internal class Program
 
     }
 
-
     public void SeriesNameCellMethod(Cell seriesColorCell,Cell seriesNameCell, string seriesName, string color)
     {
         Graph graphSeries1 = new Graph(3.0, 3.0);
@@ -1231,6 +1228,359 @@ internal class Program
         seriesNameCell.Paragraphs.Add(seriesNameCellStyledText);
         seriesNameCell.Margin = new MarginInfo(0, 0, 0, 2);
     }
+
+    public void VirtuesBarGraph(Page page, object[][] values)
+    {
+        Table table = new Table()
+        {
+            ColumnWidths = "500",
+            Margin = new MarginInfo(20, 1, 20, 3),
+        };
+        page.Paragraphs.Add(table);
+
+        Row row1 = table.Rows.Add();
+
+        Cell title = row1.Cells.Add();
+
+        Table TitleTable = new Table()
+        {
+            ColumnWidths ="50, 150, 150, 150",
+            DefaultCellBorder = new BorderInfo(BorderSide.None)
+        };
+
+        title.Paragraphs.Add(TitleTable);
+
+        Row TitleTableRow = TitleTable.Rows.Add();
+
+        Cell TitleTableRowCell1 = TitleTableRow.Cells.Add();
+        Cell TitleTableRowCell2 = TitleTableRow.Cells.Add();
+        Cell TitleTableRowCell3 = TitleTableRow.Cells.Add();
+        Cell TitleTableRowCell4 = TitleTableRow.Cells.Add();
+
+        TextFragment titleTableRowCellStyledText = new TextFragment();
+
+        TextSegment titleTableRowCellSegment = new TextSegment("\b")
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 9,
+                FontStyle = FontStyles.Bold,
+                Font = FontRepository.FindFont("Arial"),
+                LineSpacing = 2,
+                HorizontalAlignment = HorizontalAlignment.Center,
+            }
+        };
+        titleTableRowCellStyledText.Segments.Add(titleTableRowCellSegment);
+        titleTableRowCellStyledText.HorizontalAlignment = HorizontalAlignment.Center;
+        titleTableRowCellStyledText.VerticalAlignment = VerticalAlignment.Center;
+
+        TitleTableRowCell1.Paragraphs.Add(titleTableRowCellStyledText);
+
+        VirtueTableTitle(TitleTableRowCell2, "POWER");
+        VirtueTableTitle(TitleTableRowCell3, "PUSH");
+        VirtueTableTitle(TitleTableRowCell4, "PAIN");
+
+
+
+        Row row2 = table.Rows.Add();
+
+        VirtueTableBarGraph(row2, values);
+
+
+
+
+
+
+
+
+
+
+    }
+
+    public void VirtueTableTitle(Cell title, string titleOfTable)
+    {
+
+        Table titleTable = new Table()
+        {
+            ColumnWidths = "140",
+            
+        };
+
+        title.Paragraphs.Add(titleTable);
+
+        
+
+        BorderInfo borderInfo = new BorderInfo
+        {
+            Top = new GraphInfo
+            {
+                LineWidth = 0.1f, // Set the top border width
+                Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#F4F4F2"))
+            },
+            Left = new GraphInfo
+            {
+                LineWidth = 0.2f, // Set the left border width
+                Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#9497A0"))
+            },
+            Right = new GraphInfo
+            {
+                LineWidth = 0.5f, // Set the right border width
+                Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#747C89"))
+            },
+            Bottom = new GraphInfo
+            {
+                LineWidth = 0.3f, // Set the bottom border width
+                Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#747A90"))
+            }
+        };
+
+        titleTable.Border = borderInfo;
+
+
+        Row titleTableRow = titleTable.Rows.Add();
+
+        Cell titleTableRowCell = titleTableRow.Cells.Add();
+
+        BorderInfo titleTableRowCellBorderInfo = new BorderInfo
+        {
+            Top = new GraphInfo
+            {
+                LineWidth = 4.7f, // Set the top border width
+                Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#CEDAF0"))
+            },
+            Left = new GraphInfo
+            {
+                LineWidth = 4.8f, // Set the left border width
+                Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#BEC9E5"))
+            },
+            Right = new GraphInfo
+            {
+                LineWidth = 4.5f, // Set the right border width
+                Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#B3BFD5"))
+            },
+            Bottom = new GraphInfo
+            {
+                LineWidth = 4.2f, // Set the bottom border width
+                Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#A8B8DA"))
+            }
+        };
+
+        titleTableRowCell.Border = titleTableRowCellBorderInfo;
+
+
+        TextFragment titleTableRowCellStyledText = new TextFragment();
+
+        TextSegment titleTableRowCellSegment = new TextSegment(titleOfTable)
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 9,
+                FontStyle = FontStyles.Bold,
+                Font = FontRepository.FindFont("Arial"),
+                LineSpacing = 2,
+                HorizontalAlignment = HorizontalAlignment.Center,
+            }
+        };
+        titleTableRowCellStyledText.Segments.Add(titleTableRowCellSegment);
+        titleTableRowCellStyledText.HorizontalAlignment = HorizontalAlignment.Center;
+        titleTableRowCellStyledText.VerticalAlignment = VerticalAlignment.Center;
+
+        titleTableRowCell.Paragraphs.Add(titleTableRowCellStyledText);
+        titleTableRowCell.BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#B7CBF0"));
+
+
+    }
+
+
+    public void VirtueTableBarGraph(Row row, Object[] values)
+    {
+        Table MainTable = new Table()
+        {
+            ColumnWidths = "500",
+            DefaultCellBorder = new BorderInfo(BorderSide.None),
+        };
+
+        Cell rowCell = row.Cells.Add();
+        rowCell.Paragraphs.Add(MainTable);
+
+
+
+        Table table = new Table()
+        {
+            ColumnWidths = "50 450",
+            DefaultCellBorder = new BorderInfo(BorderSide.None),
+        };
+
+        Cell rowCell = row.Cells.Add();
+        rowCell.Paragraphs.Add(table);
+
+        Row tableRow = table.Rows.Add();
+
+        Cell tableRowCell1 = tableRow.Cells.Add();
+
+        Cell tableRowCell2 = tableRow.Cells.Add();
+
+        var lastValuesWithPercent = values.Select(row => $"{((object[])row)[((object[])row).Length - 1]}%").ToArray();
+
+        var lastValues = values.Select(row => ((object[])row)[((object[])row).Length - 1]).ToArray();
+
+        var result = string.Join("\b", lastValuesWithPercent);
+
+        TextFragment percentageText = new TextFragment();
+
+        TextSegment titleTableRowCellSegment = new TextSegment("\n100%\n80%\n60%\n40%\n20%\n0%")
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 9,
+                FontStyle = FontStyles.Bold,
+                Font = FontRepository.FindFont("Arial"),
+                LineSpacing = 2,
+                HorizontalAlignment = HorizontalAlignment.Center,
+            }
+        };
+        percentageText.Segments.Add(titleTableRowCellSegment);
+        percentageText.HorizontalAlignment = HorizontalAlignment.Center;
+        //percentageText.VerticalAlignment = VerticalAlignment.Center;
+
+        tableRowCell1.Paragraphs.Add(percentageText);
+
+        VirtueTableBarGraphDiagram(tableRowCell2, lastValues, result);
+
+
+
+
+
+    }
+
+
+    public void VirtueTableBarGraphDiagram(Cell tableRowCell2, Object[] values, string lastValuesWithPercent)
+    {
+        Table table = new Table()
+        {
+            ColumnWidths = "450",
+            DefaultCellBorder = new BorderInfo(BorderSide.None),
+        };
+
+        tableRowCell2.Paragraphs.Add(table);
+
+        Row row1 = table.Rows.Add();
+
+        Cell cell1 = row1.Cells.Add();
+
+        TextFragment percentageText = new TextFragment();
+
+        TextSegment titleTableRowCellSegment = new TextSegment(lastValuesWithPercent)
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 3,
+                FontStyle = FontStyles.Bold,
+                Font = FontRepository.FindFont("Arial"),
+                LineSpacing = 2,
+                HorizontalAlignment = HorizontalAlignment.Center,
+            }
+        };
+        percentageText.Segments.Add(titleTableRowCellSegment);
+        percentageText.HorizontalAlignment = HorizontalAlignment.Center;
+
+        cell1.Paragraphs.Add(percentageText);
+
+
+        Row row2 = table.Rows.Add();
+        Cell cell2 = row2.Cells.Add();
+
+        var numericValues = values.Select(v => Convert.ToInt32(v)).ToArray();
+
+        var graph = new Graph(450.0, 100.0);
+
+        cell2.Paragraphs.Add(graph);
+
+        BorderInfo borderInfo = new BorderInfo
+        {
+            //Top = new GraphInfo
+            //{
+            //    LineWidth = 0.1f, // Set the top border width
+            //    Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#E6EAEB"))
+            //},
+            //Left = new GraphInfo
+            //{
+            //    LineWidth = 0.1f, // Set the left border width
+            //    Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#E6EAEB"))
+            //},
+            //Right = new GraphInfo
+            //{
+            //    LineWidth = 3, // Set the right border width
+            //    Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#A6A6A8"))
+            //},
+            Bottom = new GraphInfo
+            {
+                LineWidth = 3, // Set the bottom border width
+                Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#BFBEC6"))
+            }
+        };
+
+        table.Border = borderInfo;
+
+        float xPosition = 5; 
+        float spacing = 3; 
+
+        foreach (var value in numericValues)
+        {
+            
+            Rectangle bar = new Rectangle(xPosition, 0, 5, (float)(value * 0.50))
+            {
+                GraphInfo = new GraphInfo
+                {
+                    Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#B3C8E7")),
+                    FillColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#B3C8E7")),
+                }
+            };
+            graph.Shapes.Add(bar);
+
+           
+            // Move xPosition for the next bar
+            xPosition += 5 + spacing; // Adjust spacing between bars
+        }
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     //private static void AddBarGraph(Aspose.Pdf.Cell cell)
