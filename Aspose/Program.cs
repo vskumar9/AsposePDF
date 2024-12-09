@@ -22,6 +22,8 @@ internal class Program
 
         Page2(page);
 
+        Page3(page);
+
         
 
 
@@ -432,6 +434,265 @@ internal class Program
         
 
     }
+
+    static void Page3(Page page)
+    {
+
+        Page3HeaderContent(page);
+
+        Table table = new Table
+        {
+            ColumnWidths = "260 260",
+            Margin = new MarginInfo(15, 1, 10, 2),
+            DefaultCellBorder = new BorderInfo(BorderSide.None),
+        };
+
+        page.Paragraphs.Add(table);
+
+
+        Row row1 = table.Rows.Add();
+
+        Cell cell1 = row1.Cells.Add();
+
+        string title = "LIMENEAL TALENT DRIVERS\n";
+        string desc = "Top 3 Dimensions of an individual indicating Orientation, Purpose, Passion, Attitude, and preferred work environment. Identifies preferred communication style of the candidate.";
+
+        TextFragment cell1Text = new TextFragment();
+
+        TextSegment segment1 = new TextSegment(title)
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 10,
+                FontStyle = FontStyles.Regular,
+                Font = FontRepository.FindFont("Arial"),
+                LineSpacing = 2,
+            }
+        };
+
+
+        TextSegment segment2 = new TextSegment(desc)
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 9,
+                FontStyle = FontStyles.Regular,
+                Font = FontRepository.FindFont("Arial"),
+                LineSpacing = 2,
+            }
+        };
+
+        cell1Text.Segments.Add(segment1);
+        cell1Text.Segments.Add(segment2);
+
+        cell1.Paragraphs.Add(cell1Text);
+
+        cell1.Margin = new MarginInfo { Left = 30, Top = 40 };
+
+
+
+
+        Cell cell2 = row1.Cells.Add();
+
+        Table rightSideTable = new Table()
+        {
+            ColumnWidths = "260",
+            Border = new BorderInfo(BorderSide.None),
+        };
+
+        cell2.Paragraphs.Add(rightSideTable);
+
+        Row rightSideTableRow1 = rightSideTable.Rows.Add();
+
+        Cell rightSideTableRow1Cell1 = rightSideTableRow1.Cells.Add();
+        
+        TextFragment rightSideTableRow1Cell1Text = new TextFragment();
+
+        TextSegment segment3 = new TextSegment("Pages")
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 10,
+                FontStyle = FontStyles.Regular,
+                Font = FontRepository.FindFont("Arial"),
+                LineSpacing = 2,
+            }
+        };
+
+        rightSideTableRow1Cell1Text.Segments.Add(segment3);
+        rightSideTableRow1Cell1Text.HorizontalAlignment = HorizontalAlignment.Center;
+
+        rightSideTableRow1Cell1.Paragraphs.Add(rightSideTableRow1Cell1Text);
+
+
+        //rightSideTableRow1Cell1.Margin = new MarginInfo { Left = 30, Top = 10 };
+
+
+        Row rightSideTableRow2 = rightSideTable.Rows.Add();
+
+        Cell rightSideTableRow2Cell1 = rightSideTableRow2.Cells.Add();
+
+        Table rightSideTable2 = new Table()
+        {
+            ColumnWidths = "100 20 100",
+            Border = new BorderInfo(BorderSide.None)
+        };
+
+        rightSideTable2.Margin = new MarginInfo
+        {
+            Left = 20,
+        };
+
+
+        rightSideTableRow2Cell1.Paragraphs.Add(rightSideTable2);
+
+        Row rightSideTable2Row = rightSideTable2.Rows.Add();
+
+        Cell rightSideTable2RowCell1 = rightSideTable2Row.Cells.Add();
+        Cell rightSideTable2RowCell2 = rightSideTable2Row.Cells.Add();
+        Cell rightSideTable2RowCell3 = rightSideTable2Row.Cells.Add();
+
+
+        Graph graph1 = new Graph(50.0, 50.0);
+
+        var circle = new Circle(30, 10, 10)
+        {
+            GraphInfo = new GraphInfo
+            {
+                Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#2F5596")),
+                FillColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#2F5596")),
+            },
+        };
+        TextFragment text1 = new TextFragment();
+
+        TextSegment segment4 = new TextSegment("4")
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Color.White,
+                FontSize = 10,
+                FontStyle = FontStyles.Regular,
+                Font = FontRepository.FindFont("Arial"),
+            }
+        };
+
+        text1.Segments.Add(segment4);
+        circle.Text = text1;
+
+
+        graph1.Shapes.Add(circle);
+        rightSideTable2RowCell1.Paragraphs.Add(graph1);
+        rightSideTable2RowCell1.Margin = new MarginInfo { Left = 50 };
+
+
+
+
+
+
+
+        TextFragment textTO = new TextFragment();
+
+        TextSegment segment6 = new TextSegment("to")
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#2F5596")),
+                FontSize = 10,
+                FontStyle = FontStyles.Regular,
+                Font = FontRepository.FindFont("Arial"),
+            }
+        };
+
+        textTO.Segments.Add(segment6);
+
+
+        rightSideTable2RowCell2.Alignment = HorizontalAlignment.Center;
+        rightSideTable2RowCell2.Paragraphs.Add(textTO);
+
+        rightSideTable2RowCell2.Margin = new MarginInfo { Top = 30 };
+
+
+
+
+
+
+
+
+
+
+        Graph graph2 = new Graph(50.0, 50.0);
+
+        var circle2 = new Circle(-30, 10, 10)
+        {
+            GraphInfo = new GraphInfo
+            {
+                Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#2F5596")),
+                FillColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#2F5596")),
+            },
+        };
+        TextFragment text2 = new TextFragment();
+
+        TextSegment segment5 = new TextSegment("5")
+        {
+            TextState = new TextState
+            {
+                ForegroundColor = Color.White,
+                FontSize = 10,
+                FontStyle = FontStyles.Regular,
+                Font = FontRepository.FindFont("Arial"),
+            }
+        };
+
+        text2.Segments.Add(segment5);
+        circle2.Text = text2;
+
+
+        graph2.Shapes.Add(circle2);
+        rightSideTable2RowCell3.Paragraphs.Add(graph2);
+        rightSideTable2RowCell3.Margin = new MarginInfo { Left = 50 };
+
+
+
+
+    }
+
+    static void Page3HeaderContent(Page page)
+    {
+        Table TableOfContext = new Table
+        {
+            ColumnWidths = "550",
+            Margin = new MarginInfo(10, 1, 10, 10),
+            DefaultCellBorder = new BorderInfo(BorderSide.None)
+        };
+
+        page.Paragraphs.Add(TableOfContext);
+
+        string[] TableOfContextHeaderTexts = { "TABLE OF CONTENTS" };
+
+        Row TableOfContexHeaderRow = TableOfContext.Rows.Add();
+        foreach (string headerText in TableOfContextHeaderTexts)
+        {
+            TableOfContexHeaderRow.Cells.Add(headerText);
+        }
+
+        foreach (Cell cell in TableOfContexHeaderRow.Cells)
+        {
+            cell.BackgroundColor = Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#DCE1EE"));
+            cell.DefaultCellTextState = new TextState
+            {
+                ForegroundColor = Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                FontSize = 16,
+                FontStyle = FontStyles.Bold,
+                Font = FontRepository.FindFont("Arial")
+            };
+            cell.Paragraphs[0].HorizontalAlignment = HorizontalAlignment.Center;
+            cell.Paragraphs[0].Margin = new MarginInfo(0, 3, 0, 3);
+        }
+    }
+
 
     static void PageHeaderContent(Page page)
     {
