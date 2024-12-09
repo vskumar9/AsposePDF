@@ -1,6 +1,7 @@
 ﻿using Aspose.Pdf;
 using Aspose.Pdf.Drawing;
 using Aspose.Pdf.Text;
+using static System.Net.Mime.MediaTypeNames;
 using Rectangle = Aspose.Pdf.Drawing.Rectangle;
 
 
@@ -159,32 +160,6 @@ internal class Program
         new object[] { "Push", "Analytical", 32 },
         new object[] { "Push", "Justice", 30 },
         new object[] { "Push", "Kindness", 28 },
-        new object[] { "Push", "Hope", 26 },
-        new object[] { "Push", "Peace", 24 },
-        new object[] { "Push", "Faith", 22 },
-        new object[] { "Push", "Counsel", 20 },
-
-        // Category "Pain"
-        new object[] { "Pain", "Charisma", 30 },
-        new object[] { "Pain", "Empathy", 26 },
-        new object[] { "Pain", "Creativeness", 24 },
-        new object[] { "Pain", "Understanding", 22 },
-        new object[] { "Pain", "Thankfulness", 20 },
-        new object[] { "Pain", "Orderliness", 18 },
-        new object[] { "Pain", "Cooperation", 16 },
-        new object[] { "Pain", "Wisdom", 14 },
-        new object[] { "Pain", "Ambition", 12 },
-        new object[] { "Pain", "Friendliness", 10 },
-        new object[] { "Pain", "Discernment", 8 },
-        new object[] { "Pain", "Knowledge", 6 },
-        new object[] { "Pain", "Humility", 4 },
-        new object[] { "Pain", "Analytical", 2 },
-        new object[] { "Pain", "Justice", 1 },
-        new object[] { "Pain", "Kindness", 0 },
-        new object[] { "Pain", "Hope", 0 },
-        new object[] { "Pain", "Peace", 0 },
-        new object[] { "Pain", "Faith", 0 },
-        new object[] { "Pain", "Counsel", 0 }
     };
 
         // Example usage: Passing data to generate the bar graph
@@ -1235,7 +1210,38 @@ internal class Program
         {
             ColumnWidths = "500",
             Margin = new MarginInfo(20, 1, 20, 3),
+            //DefaultCellBorder = new BorderInfo(BorderSide.Top | BorderSide.Bottom | BorderSide.Left | BorderSide.Right, 0.5f, Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#D8D8D8")))
         };
+
+        BorderInfo borderInfo = new BorderInfo
+        {
+            Top = new GraphInfo
+            {
+                LineWidth = 1f, // Set the top border width
+                Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#D8D8D8"))
+            },
+            Left = new GraphInfo
+            {
+                LineWidth = 1f, // Set the left border width
+                Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#D8D8D8"))
+            },
+            Right = new GraphInfo
+            {
+                LineWidth = 1f, // Set the right border width
+                Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#D8D8D8"))
+            },
+            Bottom = new GraphInfo
+            {
+                LineWidth = 1f, // Set the bottom border width
+                Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#D8D8D8"))
+            }
+        };
+
+        table.Border = borderInfo;
+
+
+
+
         page.Paragraphs.Add(table);
 
         Row row1 = table.Rows.Add();
@@ -1244,7 +1250,7 @@ internal class Program
 
         Table TitleTable = new Table()
         {
-            ColumnWidths ="50, 150, 150, 150",
+            ColumnWidths ="50 150 150 150",
             DefaultCellBorder = new BorderInfo(BorderSide.None)
         };
 
@@ -1256,6 +1262,13 @@ internal class Program
         Cell TitleTableRowCell2 = TitleTableRow.Cells.Add();
         Cell TitleTableRowCell3 = TitleTableRow.Cells.Add();
         Cell TitleTableRowCell4 = TitleTableRow.Cells.Add();
+        TitleTable.Margin = new MarginInfo
+        {
+            Top = 5,
+            Bottom = 0,
+            Left = 0,
+            Right = 0
+        };
 
         TextFragment titleTableRowCellStyledText = new TextFragment();
 
@@ -1285,14 +1298,9 @@ internal class Program
 
         Row row2 = table.Rows.Add();
 
+
+
         VirtueTableBarGraph(row2, values);
-
-
-
-
-
-
-
 
 
 
@@ -1398,23 +1406,25 @@ internal class Program
     {
         Table MainTable = new Table()
         {
-            ColumnWidths = "500",
+            ColumnWidths = "600",
             DefaultCellBorder = new BorderInfo(BorderSide.None),
         };
 
         Cell rowCell = row.Cells.Add();
         rowCell.Paragraphs.Add(MainTable);
 
+        Row MianTableRow = MainTable.Rows.Add();
+
 
 
         Table table = new Table()
         {
-            ColumnWidths = "50 450",
+            ColumnWidths = "50 550",
             DefaultCellBorder = new BorderInfo(BorderSide.None),
         };
 
-        Cell rowCell = row.Cells.Add();
-        rowCell.Paragraphs.Add(table);
+        Cell MianTableRowCell = MianTableRow.Cells.Add();
+        MianTableRowCell.Paragraphs.Add(table);
 
         Row tableRow = table.Rows.Add();
 
@@ -1426,19 +1436,23 @@ internal class Program
 
         var lastValues = values.Select(row => ((object[])row)[((object[])row).Length - 1]).ToArray();
 
-        var result = string.Join("\b", lastValuesWithPercent);
+        var nameOfVirtue = values.Select(row => ((object[])row)[((object[])row).Length - 2]).ToArray();
+
+        var result = string.Join("  ", lastValuesWithPercent);
+        var nameOfVirtueString = string.Join(",", nameOfVirtue);
 
         TextFragment percentageText = new TextFragment();
 
-        TextSegment titleTableRowCellSegment = new TextSegment("\n100%\n80%\n60%\n40%\n20%\n0%")
+        TextSegment titleTableRowCellSegment = new TextSegment("\n100%\n80%\n60%\n40%\n20%\n0%\n\n\n\n\n\n\n")
         {
             TextState = new TextState
             {
-                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
-                FontSize = 9,
+                //ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                ForegroundColor = Aspose.Pdf.Color.Black,
+                FontSize = 8,
                 FontStyle = FontStyles.Bold,
                 Font = FontRepository.FindFont("Arial"),
-                LineSpacing = 2,
+                LineSpacing = 1.5f,
                 HorizontalAlignment = HorizontalAlignment.Center,
             }
         };
@@ -1448,7 +1462,7 @@ internal class Program
 
         tableRowCell1.Paragraphs.Add(percentageText);
 
-        VirtueTableBarGraphDiagram(tableRowCell2, lastValues, result);
+        VirtueTableBarGraphDiagram(tableRowCell2, lastValues, result, nameOfVirtueString);
 
 
 
@@ -1457,11 +1471,11 @@ internal class Program
     }
 
 
-    public void VirtueTableBarGraphDiagram(Cell tableRowCell2, Object[] values, string lastValuesWithPercent)
+    public void VirtueTableBarGraphDiagram(Cell tableRowCell2, Object[] values, string lastValuesWithPercent, string nameOfVirtueString)
     {
         Table table = new Table()
         {
-            ColumnWidths = "450",
+            ColumnWidths = "550",
             DefaultCellBorder = new BorderInfo(BorderSide.None),
         };
 
@@ -1477,8 +1491,9 @@ internal class Program
         {
             TextState = new TextState
             {
-                ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
-                FontSize = 3,
+                //ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                ForegroundColor = Aspose.Pdf.Color.Black,
+                FontSize = 5.1f,
                 FontStyle = FontStyles.Bold,
                 Font = FontRepository.FindFont("Arial"),
                 LineSpacing = 2,
@@ -1490,49 +1505,36 @@ internal class Program
 
         cell1.Paragraphs.Add(percentageText);
 
+        //cell1.Border = new BorderInfo(BorderSide.All, 0.5f,Color.Black);
+
 
         Row row2 = table.Rows.Add();
         Cell cell2 = row2.Cells.Add();
 
         var numericValues = values.Select(v => Convert.ToInt32(v)).ToArray();
 
-        var graph = new Graph(450.0, 100.0);
+        var graph = new Graph(450.0, 51.0);
 
         cell2.Paragraphs.Add(graph);
 
         BorderInfo borderInfo = new BorderInfo
         {
-            //Top = new GraphInfo
-            //{
-            //    LineWidth = 0.1f, // Set the top border width
-            //    Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#E6EAEB"))
-            //},
-            //Left = new GraphInfo
-            //{
-            //    LineWidth = 0.1f, // Set the left border width
-            //    Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#E6EAEB"))
-            //},
-            //Right = new GraphInfo
-            //{
-            //    LineWidth = 3, // Set the right border width
-            //    Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#A6A6A8"))
-            //},
             Bottom = new GraphInfo
             {
-                LineWidth = 3, // Set the bottom border width
+                LineWidth = 0.5f, // Set the bottom border width
                 Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#BFBEC6"))
             }
         };
 
-        table.Border = borderInfo;
+        cell2.Border = borderInfo;
 
         float xPosition = 5; 
-        float spacing = 3; 
+        float spacing = 5.2f; 
 
         foreach (var value in numericValues)
         {
             
-            Rectangle bar = new Rectangle(xPosition, 0, 5, (float)(value * 0.50))
+            Rectangle bar = new Rectangle(xPosition, 0, 8, (float)(value * 0.50))
             {
                 GraphInfo = new GraphInfo
                 {
@@ -1544,9 +1546,83 @@ internal class Program
 
            
             // Move xPosition for the next bar
-            xPosition += 5 + spacing; // Adjust spacing between bars
+            xPosition += 8 + spacing; // Adjust spacing between bars
         }
 
+        Row row3 = table.Rows.Add();
+        Cell cell3 = row3.Cells.Add();
+
+
+        int columnCount = 36;
+        string columnWidth = "13.5";
+        string columnWidths = string.Join(" ", Enumerable.Repeat(columnWidth, columnCount));
+
+        Table NameOfTheVirtueTable = new Table()
+        {
+            ColumnWidths = columnWidths,
+            DefaultCellBorder = new BorderInfo(BorderSide.None)
+        };
+
+
+
+        cell3.Paragraphs.Add(NameOfTheVirtueTable);
+
+        string[] array = nameOfVirtueString.Split(',');
+
+
+        Row NameOfTheVirtueTableRow = NameOfTheVirtueTable.Rows.Add();
+        NameOfTheVirtueTableRow.FixedRowHeight = 65;
+
+        foreach (string virtue in array)
+        {
+            Cell cell = NameOfTheVirtueTableRow.Cells.Add();
+
+            TextFragment NameOfVirtue = new TextFragment();
+
+            TextSegment NameOfVirtueSegment = new TextSegment(virtue)
+            {
+                TextState = new TextState
+                {
+                    //ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+                    ForegroundColor = Aspose.Pdf.Color.Black,
+                    FontSize = 5,
+                    FontStyle = FontStyles.Regular,
+                    Font = FontRepository.FindFont("Arial")
+                }
+            };
+            NameOfVirtue.Segments.Add(NameOfVirtueSegment);
+            NameOfVirtue.TextState.Rotation = 90;
+            NameOfVirtue.VerticalAlignment = VerticalAlignment.Top;
+            NameOfVirtue.TextState.HorizontalAlignment = HorizontalAlignment.Center;
+
+
+            cell.Paragraphs.Add(NameOfVirtue);
+
+            cell.Margin = new MarginInfo(25, 0f, 0f, 0f);
+        }
+
+
+
+        //TextFragment NameOfVirtue = new TextFragment();
+
+        //TextSegment NameOfVirtueSegment = new TextSegment(nameOfVirtueString)
+        //{
+        //    TextState = new TextState
+        //    {
+        //        ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+        //        FontSize = 5f,
+        //        FontStyle = FontStyles.Bold,
+        //        Font = FontRepository.FindFont("Arial"),
+        //        LineSpacing = 2,
+        //        //HorizontalAlignment = HorizontalAlignment.Center,
+        //    }
+        //};
+        //NameOfVirtue.Segments.Add(NameOfVirtueSegment);
+        ////NameOfVirtue.HorizontalAlignment = HorizontalAlignment.Center;
+        //NameOfVirtue.TextState.Rotation = 90;
+
+
+        //cell3.Paragraphs.Add(NameOfVirtue);
 
 
 
