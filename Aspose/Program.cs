@@ -1,7 +1,7 @@
-﻿using Aspose.Pdf;
+﻿using Aspose;
+using Aspose.Pdf;
 using Aspose.Pdf.Drawing;
 using Aspose.Pdf.Text;
-using static System.Net.Mime.MediaTypeNames;
 using Rectangle = Aspose.Pdf.Drawing.Rectangle;
 
 
@@ -24,12 +24,174 @@ internal class Program
 
         Page3(page);
 
-        
+        Level3 l3 = new Level3();
+        l3.LW_Level3();
+
+        //Page4(page);
+
+        //float pageHeight = (float)page.PageInfo.Height;
+
+        //float pieChartYPosition = pageHeight - 10 - 50;
+
+        //Graph graphpie = new Graph(50.0, 50.0)
+        //{
+        //    Top = pieChartYPosition, // This will position the pie chart near the bottom
+        //    Left = 10, // Adjust the left margin as needed
+        //    Margin = new MarginInfo(0, 0, 0, 0)
+        //    // HorizontalAlignment = HorizontalAlignment.Center, // Center alignment
+        //    // Margin = new MarginInfo(0, 0, 0, 0)  // Top, Left, Right, Bottom
+        //};// Adjust the graph height to accommodate at the bottom
+        //BorderInfo borderInfo = new BorderInfo(BorderSide.All, Color.Green);
+        //graphpie.Border = borderInfo;
+
+        //// Pie chart parameters
+        //float centerX = 250; // Center horizontally
+
+        //float centerY = 50;
+        //Circle cr = new Circle(280, 180, 30)
+        //{
+        //    GraphInfo = new Aspose.Pdf.GraphInfo
+        //    {
+        //        FillColor = Aspose.Pdf.Color.WhiteSmoke,
+        //        //LineWidth = 30
+        //    }
+        //};
+        ///* float centerY = 250;  /*//// Position near the bottom
+        //float radius = 60;   // Smaller radius for the pie chart
+
+        //// Data for the pie chart
+        //float[] percentagesPie = { 50, 50 }; // Values as percentages
+        //Aspose.Pdf.Color[] colors = {
+        //     Aspose.Pdf.Color.Red,
+        //     Aspose.Pdf.Color.Green,
+        //     Aspose.Pdf.Color.Blue,
+        //     Aspose.Pdf.Color.Yellow
+        // };
+
+        //// Start drawing pie slices
+        //float startAngle = 0;
+        //for (int i = 0; i < percentagesPie.Length; i++)
+        //{
+        //    // Calculate the sweep angle for the slice
+        //    float sweepAngle = (percentagesPie[i] / 100) * 360;
+
+        //    // Create a slice using a polygonal approximation
+        //    Aspose.Pdf.Drawing.Path slicePath = CreatePieSlice(280, 180, radius, startAngle, sweepAngle, colors[i]);
+
+        //    // Add the slice to the graph
+        //    graphpie.Shapes.Add(slicePath);
+        //    double angleRadians = Math.PI * 35 / 180;
+
+        //    // Calculate Y-coordinate
+        //    double y = centerY + radius * Math.Sin(angleRadians);
+        //    TextFragment txt = new TextFragment("required\n45");
+        //    txt.Position = new Position((float)255, (float)y);
+        //    // Update the start angle for the next slice
+        //    startAngle += sweepAngle;
+        //    page.Paragraphs.Add(txt);
+        //}
+
+
+        //graphpie.Shapes.Add(cr);
+
+
+        //page.Paragraphs.Add(graphpie);
+
+
+
+        //Graph graph = new Graph(100, 100);
+        //// Set border for Drawing object
+        //BorderInfo borderInfo = new BorderInfo(BorderSide.All, Color.Green);
+        //graph.Border =borderInfo;
+
+        //Arc arc = new Arc(0, 0, 95, 0, 90);
+        //arc.GraphInfo.FillColor =Color.GreenYellow;
+        //graph.Shapes.Add(arc);
+
+        //Line line = new Line(new float[] { 95, 0, 0, 0, 0, 95 });
+        //line.GraphInfo.FillColor = Color.GreenYellow;
+        //graph.Shapes.Add(line);
+
+        //// Add Graph object to paragraphs collection of page
+        //page.Paragraphs.Add(graph);
 
 
 
         pdfDocument.Save(@"D:\Aspose_PdfAspose_PDF.pdf");
     }
+
+
+
+
+    static Aspose.Pdf.Drawing.Path CreatePieSlice(float centerX, float centerY, float radius, float startAngle, float sweepAngle, Aspose.Pdf.Color fillColor)
+    {
+        // Create a Path object
+        Aspose.Pdf.Drawing.Path path = new Aspose.Pdf.Drawing.Path();
+
+        // Number of segments to approximate the arc
+        int segments = 50;
+        float angleStep = sweepAngle / segments;
+        var line1 = new Aspose.Pdf.Drawing.Line(new float[] { centerX, centerY,
+         centerX + radius * (float)Math.Cos(startAngle * Math.PI / 180),
+         centerY + radius * (float)Math.Sin(startAngle * Math.PI / 180) });
+        line1.GraphInfo.FillColor = Aspose.Pdf.Color.OrangeRed;
+        line1.Text = new TextFragment("abc")
+        {
+            TextState =
+         {
+             Font = FontRepository.FindFont("Arial-Bold"),
+             FontSize = 12,
+             ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#266CA9"))
+         },
+            //Margin = new MarginInfo(0, 10, 0, 5)
+        };
+        // Add a line from the center to the start of the arc
+        path.Shapes.Add(line1);
+
+        // Approximate the arc using line segments
+        for (int j = 1; j <= segments; j++)
+        {
+            float angle = startAngle + j * angleStep;
+            path.Shapes.Add(new Aspose.Pdf.Drawing.Line(new float[] {
+             centerX + radius * (float)Math.Cos((startAngle + (j - 1) * angleStep) * Math.PI / 180),
+             centerY + radius * (float)Math.Sin((startAngle + (j - 1) * angleStep) * Math.PI / 180),
+             centerX + radius * (float)Math.Cos(angle * Math.PI / 180),
+             centerY + radius * (float)Math.Sin(angle * Math.PI / 180)
+         }));
+        }
+
+        // Close the slice by drawing a line back to the center
+        path.Shapes.Add(new Aspose.Pdf.Drawing.Line(new float[] {
+         centerX + radius * (float)Math.Cos((startAngle + sweepAngle) * Math.PI / 180),
+         centerY + radius * (float)Math.Sin((startAngle + sweepAngle) * Math.PI / 180),
+         centerX, centerY }));
+
+        // Set the fill color
+        path.GraphInfo = new GraphInfo { FillColor = Aspose.Pdf.Color.BlueViolet, Color = Aspose.Pdf.Color.Black };
+
+        return path;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     static void Page1(Page page)
     {
@@ -658,6 +820,110 @@ internal class Program
 
 
     }
+
+    //static void Page4(Page page)
+    //{
+    //    Table table = new Table()
+    //    {
+    //        ColumnWidths = "166 166 166",
+    //        Margin = new MarginInfo(10, 1, 10, 10),
+    //        DefaultCellBorder = new BorderInfo(BorderSide.None)
+    //    };
+
+    //    page.Paragraphs.Add(table);
+
+    //    Row row1 = table.Rows.Add();
+    //    Cell row1Cell1 = row1.Cells.Add();
+    //    Cell row1Cell2 = row1.Cells.Add();
+    //    Cell row1Cell3 = row1.Cells.Add();
+
+    //    Table row1Table1 = new Table()
+    //    {
+    //        ColumnWidths = "166",
+    //        DefaultCellBorder = new BorderInfo(BorderSide.None)
+    //    };
+    //    row1Cell1.Paragraphs.Add(row1Table1);
+
+    //    Row row1Table1Row1 = row1Table1.Rows.Add();
+    //    Cell row1Table1Row1Cell = row1Table1Row1.Cells.Add();
+
+    //    TextFragment row1Table1Row1Cell1Text = new TextFragment();
+
+    //    TextSegment segment1 = new TextSegment("TOP - 3 DOMINION, BINDER, MENTOR")
+    //    {
+    //        TextState = new TextState
+    //        {
+    //            ForegroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4472c8")),
+    //            FontSize = 8,
+    //            FontStyle = FontStyles.Regular,
+    //            Font = FontRepository.FindFont("Arial"),
+    //            LineSpacing = 2,
+    //        }
+    //    };
+
+    //    row1Table1Row1Cell1Text.Segments.Add(segment1);
+
+    //    row1Table1Row1Cell.Paragraphs.Add(row1Table1Row1Cell1Text);
+    //    row1Table1Row1Cell.Alignment = HorizontalAlignment.Center;
+
+    //    //row1Table1Row1Cell1.Margin = new MarginInfo { Left = 30, Top = 40 };
+
+    //    Row row1Table1Row2 = row1Table1.Rows.Add();
+    //    Cell row1Table1Row2Cell = row1Table1Row2.Cells.Add();
+
+
+    //    Graph graph = new Graph(150.0, 100.0)
+    //    {
+    //        Left = 100,
+    //        //Top = 30
+    //    };
+        
+
+    //    row1Table1Row2Cell.Paragraphs.Add(graph);
+
+
+
+    //    graph.Shapes.Add(new Circle(0, 0, 50)
+    //    {
+    //        GraphInfo = new GraphInfo
+    //        {
+    //            Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#e8efff")),
+    //            FillColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#e8efff")),
+    //        },
+    //    });
+
+    //    graph.Shapes.Add(new Arc(0, 0, 50, 0, 270)
+    //    {
+    //        GraphInfo = new GraphInfo
+    //        {
+    //            Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4b7bd0")),
+    //            FillColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4b7bd0")),
+    //        },
+    //    });
+
+    //    graph.Shapes.Add(new Line(new float[] { 50, -270, 0, 0, 0, 50 })
+    //    {
+    //        GraphInfo = new GraphInfo
+    //        {
+    //            Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#000")),
+    //            FillColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#4b7bd0")),
+    //        },
+    //    });
+
+    //    graph.Shapes.Add(new Circle(0, 0, 20)
+    //    {
+    //        GraphInfo = new GraphInfo
+    //        {
+    //            Color = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#ffffff")),
+    //            FillColor = Aspose.Pdf.Color.FromRgb(System.Drawing.ColorTranslator.FromHtml("#ffffff")),
+    //        },
+    //    });
+
+
+
+
+
+    //}
 
     static void Page3HeaderContent(Page page)
     {
